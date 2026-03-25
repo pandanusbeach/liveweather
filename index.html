@@ -3,197 +3,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pandanus Smart Kiosk - Bold Edition</title>
+    <title>Pandanus Smart Kiosk - 10 Min Update</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; cursor: none; }
         
         body {
-            /* Full-screen background, no scrollbars */
             color: white; height: 100vh; width: 100vw; overflow: hidden;
             display: flex; flex-direction: column; align-items: center; text-align: center;
-            /* The specific deep navy color from image_3.png */
-            background-color: #0c1c4e;
+            background-color: #0c1c4e; /* Deep Navy Blue */
+            padding: 50px 0;
         }
 
-        /* --- Header Section --- */
-        .header {
-            padding-top: 50px;
-            padding-bottom: 20px;
-            width: 100%;
-        }
-        .hotel-name {
-            font-size: 3rem;
-            font-weight: 800;
-            letter-spacing: 3px;
-            text-transform: uppercase;
-        }
-        .location {
-            font-size: 1.6rem;
-            opacity: 0.8;
-            font-weight: 300;
-            margin-top: 5px;
-        }
+        /* --- Header --- */
+        .header { width: 100%; margin-bottom: 20px; }
+        .hotel-name { font-size: 3rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; }
+        .location { font-size: 1.6rem; opacity: 0.7; font-weight: 300; margin-top: 5px; }
 
-        /* --- Main Content with Centered Photo & Overlay --- */
+        /* --- Main Content --- */
         .main-content {
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            justify-content: flex-start;
-            width: 100%;
-            padding: 0 40px;
-            position: relative;
-        }
-
-        /* The specific layout for the centered image */
-        .weather-photo-container {
-            width: 100%;
-            height: 60vh; /* Adjust height based on kiosk screen aspect ratio */
-            border-radius: 20px;
-            overflow: hidden;
-            position: relative;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.4);
-            margin-bottom: 30px;
-        }
-        .resort-photo {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            position: absolute;
-            top: 0;
-            left: 0;
-            /* Faded photo for better overlay contrast */
-            opacity: 0.8;
-        }
-
-        /* Overlaid data - absolute positioning over the photo */
-        .overlay-data {
-            position: absolute;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            width: 100%;
-            display: flex;
-            flex-direction: column;
+            justify-content: center;
             align-items: center;
+            width: 100%;
         }
 
-        /* Large icon with floating animation from before, over the photo */
         .icon-box {
             font-size: 11rem;
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.2));
+            filter: drop-shadow(0 15px 30px rgba(0,0,0,0.3));
             animation: float 4s ease-in-out infinite;
-            margin-bottom: 5px;
         }
         @keyframes float {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-15px); }
+            50% { transform: translateY(-20px); }
         }
 
-        .label {
-            font-size: 1.8rem;
-            text-transform: uppercase;
-            letter-spacing: 5px;
-            opacity: 0.7;
-            font-weight: 400;
-        }
-        
-        /* THE GIANT REAL FEEL TEMPERATURE */
         .temp-main {
             font-size: 13rem;
             font-weight: 900;
-            line-height: 1;
-            margin: 15px 0 20px;
-            text-shadow: 0 10px 40px rgba(0,0,0,0.5);
+            line-height: 0.9;
+            margin: 20px 0;
+            text-shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
-        
-        /* Specific formatting for weather status */
+
         .desc {
-            font-size: 3.5rem;
+            font-size: 3.2rem;
             font-weight: 700;
-            margin-bottom: 15px;
-            text-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        /* Formatting actual temperature line, smaller below desc */
-        .temp-actual {
-            font-size: 2rem;
-            opacity: 0.7;
-            font-weight: 300;
-            text-transform: capitalize;
-        }
-
-        /* --- Smart Advice Card, Below Photo --- */
-        .advice-container {
-            width: 100%;
-            display: flex;
-            justify-content: center;
-            margin-top: -10px; /* Overlap with photo container bottom */
-            z-content: 10;
-        }
-        .advice-card {
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(25px);
-            width: 90%;
-            padding: 35px;
-            border-radius: 30px;
-            border: 1px solid rgba(255,255,255,0.2);
-            box-shadow: 0 15px 40px rgba(0,0,0,0.3);
-            margin-bottom: 30px;
-            transition: all 0.5s ease;
-        }
-        .adv-title {
-            font-size: 1.6rem;
-            font-weight: 800;
-            color: #ffeb3b; /* Premium yellow for titles */
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-        }
-        .adv-text {
-            font-size: 2rem;
-            font-weight: 500;
-            line-height: 1.4;
             margin-bottom: 10px;
         }
-        
-        /* Styling for bullet points in the Night Greetings panel */
-        .adv-bullets {
+
+        .temp-actual {
             font-size: 1.8rem;
-            text-align: left;
-            margin-left: 20px;
-            opacity: 0.9;
-            list-style-type: disc;
-        }
-        .adv-bullets li {
-            margin-bottom: 8px;
+            opacity: 0.6;
+            margin-bottom: 40px;
         }
 
-        /* --- Kiosk Footer Clock --- */
-        .kiosk-footer {
-            width: 100%;
-            background: #091433; /* Darker navy for footer bar */
-            padding: 30px 0;
-            border-top: 2px solid rgba(255,255,255,0.1);
+        /* --- Advice Card --- */
+        .advice-card {
+            background: rgba(255, 255, 255, 0.08);
+            backdrop-filter: blur(15px);
+            width: 80%;
+            padding: 35px;
+            border-radius: 25px;
+            border: 1px solid rgba(255,255,255,0.1);
         }
-        #clock {
-            font-size: 6rem;
-            font-weight: 800;
-            letter-spacing: -2px;
-            line-height: 1;
+        .adv-text {
+            font-size: 2.1rem;
+            font-weight: 500;
+            line-height: 1.5;
         }
-        #date {
-            font-size: 1.8rem;
-            opacity: 0.8;
-            font-weight: 300;
-            margin-top: 10px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+
+        /* --- Footer --- */
+        .kiosk-footer { width: 100%; margin-top: 30px; }
+        #clock { font-size: 6rem; font-weight: 800; letter-spacing: -2px; }
+        #date { font-size: 1.7rem; opacity: 0.7; text-transform: uppercase; margin-top: 5px; }
     </style>
 </head>
-<body class="night-bg" id="bg">
+<body>
 
     <div class="header">
         <div class="hotel-name">PANDANUS BEACH Resort & Spa</div>
@@ -201,70 +89,35 @@
     </div>
 
     <div class="main-content">
-        <div class="weather-photo-container">
-            <img src="https://image.shutterstock.com/image-photo/resort-pool-night-lights-tropical-260nw-2111059437.jpg" alt="Pandanus Beach evening" class="resort-photo" id="resortPhoto">
-            
-            <div class="overlay-data">
-                <div class="icon-box" id="icon">🌙</div>
-                <div class="label">Feels Like</div>
-                <div class="temp-main" id="realFeel">--°C</div>
-                <div id="description" class="desc">Fetching latest conditions...</div>
-                <div class="temp-actual" id="actualTemp">Actual Temperature: --°C</div>
-            </div>
-        </div>
-    </div>
+        <div class="icon-box" id="icon">☀️</div>
+        <div style="font-size: 1.6rem; letter-spacing: 5px; opacity: 0.6; text-transform: uppercase;">Feels Like</div>
+        <div class="temp-main" id="realFeel">--°C</div>
+        <div id="description" class="desc">Syncing Weather...</div>
+        <div class="temp-actual" id="actualTemp">Actual: --°C</div>
 
-    <div class="advice-container">
-        <div class="advice-card" id="adviceCard">
-            <div class="adv-title" id="advTitle">Fetching...</div>
-            <div class="adv-text" id="advText">Updating your advice shortly...</div>
-            <ul class="adv-bullets" id="advBullets" style="display: none;"></ul>
+        <div class="advice-card">
+            <div class="adv-text" id="kioskAdvice">Please wait, updating information...</div>
         </div>
     </div>
 
     <footer class="kiosk-footer">
         <div id="clock">00:00:00</div>
-        <div id="date">WEDNESDAY, MARCH 25</div>
+        <div id="date">--</div>
     </footer>
 
     <script>
         const LAT = 6.4025;
         const LON = 80.0033;
 
-        // Image URLs for different conditions (Placeholders for generic resort)
-        const photoUrls = {
-            night: "https://image.shutterstock.com/image-photo/tropical-resort-pool-night-lights-260nw-2111059437.jpg", // Darker photo
-            warm_day: "https://image.shutterstock.com/image-photo/view-swimming-pool-by-sea-260nw-2111059437.jpg", // Bright day photo
-            extreme_day: "https://image.shutterstock.com/image-photo/intense-sun-resort-pool-260nw-2111059437.jpg" // High sun day photo
-        };
-
-        // Smart advice system, modified to match the image bullets for night
-        const adviceData = {
-            night: {
-                title: "🌙 Night Greetings",
-                mainText: "Enjoy the calm ocean breeze and our evening hospitality.",
-                bullets: [
-                    "Enjoy local seafood tonight.",
-                    "Enjoy local performances and cultural shows.",
-                    "Relax at the sunset bar tonight."
-                ]
-            },
-            extreme: [
-                "It's very hot today. Stay in the shade and hydrate at our beach bar.",
-                "High sun alert! Please use sunscreen before heading to the beach.",
-                "Perfect day for an air-conditioned lounge visit or a cool dip."
-            ],
-            warm: [
-                "A beautiful tropical day! Perfect for a beach walk or a swim.",
-                "High humidity. Don't forget to drink fresh juices.",
-                "Enjoy the sunshine while staying in the shade when possible."
-            ]
-        };
-
         async function fetchWeather() {
+            console.log("Weather update triggered at: " + new Date().toLocaleTimeString());
             try {
+                // Open-Meteo API URL
                 const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current_weather=true&hourly=apparent_temperature&timezone=auto`;
+                
                 const response = await fetch(url);
+                if (!response.ok) throw new Error('Network response was not ok');
+                
                 const data = await response.json();
 
                 const cur = data.current_weather;
@@ -273,76 +126,65 @@
                 const isDay = cur.is_day === 1;
                 const code = cur.weathercode;
 
-                // Update UI based on night/day
+                // Update Temperature values
                 document.getElementById('realFeel').innerText = `${realFeel}°C`;
                 document.getElementById('actualTemp').innerText = `Actual Temperature: ${Math.round(cur.temperature)}°C`;
 
-                // Photo update logic
-                let currentPhotoUrl = photoUrls.warm_day;
-                if (!isDay) {
-                    currentPhotoUrl = photoUrls.night;
-                } else if (realFeel >= 36) {
-                    currentPhotoUrl = photoUrls.extreme_day;
-                }
-                document.getElementById('resortPhoto').src = currentPhotoUrl;
-
-                // Weather Icon & Description
-                let icon = '☀️'; let desc = 'Clear Sky';
+                // Weather Icon & Description Logic
+                let icon = '☀️'; let desc = 'Clear Skies';
                 if (code === 0) { icon = isDay ? '☀️' : '🌙'; desc = 'Clear Skies'; }
                 else if (code <= 3) { icon = isDay ? '⛅' : '☁️'; desc = 'Partly Cloudy'; }
-                else if (code >= 51) { icon = '🌧️'; desc = 'Rain Showers'; }
+                else if (code >= 51 && code <= 67) { icon = '🌧️'; desc = 'Rainy'; }
+                else if (code >= 80) { icon = '🌦️'; desc = 'Rain Showers'; }
+                else if (code >= 95) { icon = '⛈️'; desc = 'Thunderstorm'; }
                 
                 document.getElementById('icon').innerText = icon;
                 document.getElementById('description').innerText = desc;
 
-                // Smart Advice Logic
-                const advTitle = document.getElementById('advTitle');
-                const advText = document.getElementById('advText');
-                const advBullets = document.getElementById('advBullets');
-                let cardStyle = "rgba(255, 255, 255, 0.15)";
-                
-                // --- Specific Logic to match image_3.png exactly when it's night-time ---
+                // Update Advice Text
+                const adviceEl = document.getElementById('kioskAdvice');
                 if (!isDay) {
-                    advTitle.innerText = adviceData.night.title;
-                    advTitle.style.color = "#ffeb3b"; // Ensure correct color
-                    advText.innerText = adviceData.night.mainText;
-                    
-                    // Display bullets
-                    advBullets.innerHTML = adviceData.night.bullets.map(b => `<li>${b}</li>`).join('');
-                    advBullets.style.display = 'block';
-                    cardStyle = "rgba(10, 30, 80, 0.6)"; // Specific deeper navy for night panel
-
-                } else if (realFeel >= 36) {
-                    advTitle.innerText = "⚠️ Heat Advisory";
-                    advTitle.style.color = "#ff5252";
-                    advText.innerText = adviceData.extreme[Math.floor(Math.random() * adviceData.extreme.length)];
-                    advBullets.style.display = 'none'; // Hide bullets for day modes for now
-                    cardStyle = "rgba(231, 76, 60, 0.3)";
-
+                    adviceEl.innerText = "Enjoy the calm ocean breeze and our evening hospitality.";
+                } else if (realFeel >= 35) {
+                    adviceEl.innerText = "It's a warm day! Stay hydrated and enjoy our chilled refreshments.";
+                } else if (code >= 51) {
+                    adviceEl.innerText = "Expect some rain today. Perfect time for a relaxing spa session.";
                 } else {
-                    advTitle.innerText = "🌴 Tropical Tip";
-                    advTitle.style.color = "#ffffff";
-                    advText.innerText = adviceData.warm[Math.floor(Math.random() * adviceData.warm.length)];
-                    advBullets.style.display = 'none'; // Hide bullets for day modes for now
-                    cardStyle = "rgba(255, 255, 255, 0.15)";
+                    adviceEl.innerText = "A beautiful tropical day! Perfect for a beach walk or a swim.";
                 }
-                
-                document.getElementById('adviceCard').style.background = cardStyle;
 
-            } catch (e) { console.error("Update failed"); }
+            } catch (error) {
+                console.error("Weather fetch failed:", error);
+                document.getElementById('description').innerText = "Update Pending...";
+            }
         }
 
         function updateTime() {
             const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            // WEDNESDAY, MARCH 25
-            document.getElementById('date').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).toUpperCase();
+            // Clock Update
+            document.getElementById('clock').innerText = now.toLocaleTimeString('en-US', { 
+                hour12: true, 
+                hour: '2-digit', 
+                minute: '2-digit', 
+                second: '2-digit' 
+            });
+            // Date Update
+            document.getElementById('date').innerText = now.toLocaleDateString('en-US', { 
+                weekday: 'long', 
+                month: 'long', 
+                day: 'numeric' 
+            }).toUpperCase();
         }
 
+        // Run immediately on load
         fetchWeather();
         updateTime();
-        setInterval(fetchWeather, 900000); // 15 mins
-        setInterval(updateTime, 1000); // 1 sec
+
+        // 10-Minute interval for weather (600,000 milliseconds)
+        setInterval(fetchWeather, 600000); 
+
+        // 1-Second interval for the clock
+        setInterval(updateTime, 1000);
     </script>
 </body>
 </html>
