@@ -3,98 +3,101 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pandanus Smart Kiosk - Animated Edition</title>
+    <title>Pandanus Kiosk - 1080x1920 Portrait</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; cursor: none; }
         
         body {
-            color: white; height: 100vh; width: 100vw; overflow: hidden;
-            display: flex; flex-direction: column; align-items: center; 
-            background-color: #0c1c4e; /* Deep Navy Blue */
-            padding: 40px 30px;
+            color: white; 
+            height: 1920px; 
+            width: 1080px; 
+            overflow: hidden;
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            background-color: #0c1c4e;
+            padding: 80px 50px;
         }
 
         /* --- Header --- */
-        .header { margin-bottom: 20px; text-align: center; }
-        .hotel-name { font-size: 3.5rem; font-weight: 900; letter-spacing: 5px; text-transform: uppercase; }
-        .location { font-size: 1.8rem; opacity: 0.8; font-weight: 400; margin-top: 5px; }
+        .header { margin-bottom: 60px; text-align: center; width: 100%; }
+        .hotel-name { font-size: 4.5rem; font-weight: 900; letter-spacing: 8px; text-transform: uppercase; line-height: 1.2; }
+        .location { font-size: 2.2rem; opacity: 0.8; font-weight: 400; margin-top: 15px; letter-spacing: 2px; }
 
-        /* --- Main Layout --- */
+        /* --- Main Content (Vertical Stack) --- */
         .main-container {
             display: flex;
-            flex-direction: row; 
-            justify-content: space-around;
+            flex-direction: column; 
             align-items: center;
             width: 100%;
             flex-grow: 1;
-            gap: 40px;
+            justify-content: space-evenly; /* Even spacing for portrait */
         }
 
-        /* --- Weather Section (Left) --- */
+        /* --- Weather Section --- */
         .weather-section {
-            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
             text-align: center;
         }
 
-        /* The Animation is Back! */
         .icon-box { 
-            font-size: 13rem; 
-            margin-bottom: 10px; 
-            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.4));
+            font-size: 18rem; 
+            filter: drop-shadow(0 20px 40px rgba(0,0,0,0.4));
             animation: floatIcon 4s ease-in-out infinite; 
         }
 
         @keyframes floatIcon {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-25px); }
+            50% { transform: translateY(-40px); }
         }
 
-        .temp-main { font-size: 14rem; font-weight: 900; line-height: 0.8; margin: 20px 0; text-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-        .desc { font-size: 4rem; font-weight: 800; color: #ffeb3b; margin-bottom: 10px; }
-        .temp-actual { font-size: 2.2rem; opacity: 0.7; font-weight: 500; }
+        .feels-label { font-size: 2.5rem; letter-spacing: 8px; opacity: 0.7; text-transform: uppercase; font-weight: 600; margin-top: 20px; }
+        .temp-main { font-size: 20rem; font-weight: 900; line-height: 1; margin: 10px 0; text-shadow: 0 15px 45px rgba(0,0,0,0.3); }
+        .desc { font-size: 5rem; font-weight: 800; color: #ffeb3b; margin-bottom: 15px; }
+        .temp-actual { font-size: 3rem; opacity: 0.8; font-weight: 500; }
 
-        /* --- Safety Advice Section (Right) --- */
+        /* --- Safety Advice Section (Centered & Wide) --- */
         .safety-section {
-            flex: 1.3;
+            width: 100%;
             background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(20px);
-            padding: 50px;
-            border-radius: 50px;
-            border: 2px solid rgba(255, 255, 255, 0.2);
+            backdrop-filter: blur(25px);
+            padding: 70px;
+            border-radius: 60px;
+            border: 3px solid rgba(255, 255, 255, 0.2);
             text-align: left;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.4);
+            box-shadow: 0 40px 80px rgba(0,0,0,0.5);
+            margin-top: 40px;
         }
 
-        .safety-title { font-size: 2.5rem; font-weight: 900; color: #ffeb3b; margin-bottom: 25px; text-transform: uppercase; border-bottom: 3px solid rgba(255,255,255,0.2); padding-bottom: 10px; }
-        .safety-intro { font-size: 1.8rem; margin-bottom: 30px; line-height: 1.4; font-weight: 700; }
+        .safety-title { font-size: 3.5rem; font-weight: 900; color: #ffeb3b; margin-bottom: 40px; text-transform: uppercase; border-bottom: 4px solid rgba(255,255,255,0.2); padding-bottom: 15px; text-align: center; }
+        .safety-intro { font-size: 2.4rem; margin-bottom: 40px; line-height: 1.5; font-weight: 700; text-align: center; }
 
-        .safety-list { list-style: none; }
-        .safety-list li { font-size: 1.7rem; margin-bottom: 20px; display: flex; align-items: flex-start; font-weight: 600; line-height: 1.3; }
-        .safety-list li::before { content: "•"; color: #ffeb3b; margin-right: 15px; font-size: 2.5rem; line-height: 1; }
+        .safety-list { list-style: none; padding: 0 20px; }
+        .safety-list li { font-size: 2.2rem; margin-bottom: 30px; display: flex; align-items: flex-start; font-weight: 600; line-height: 1.3; }
+        .safety-list li::before { content: "•"; color: #ffeb3b; margin-right: 25px; font-size: 3.5rem; line-height: 1; }
 
-        .safety-footer { font-size: 1.5rem; margin-top: 30px; font-style: italic; opacity: 0.9; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 25px; text-align: center; }
+        .safety-footer { font-size: 2rem; margin-top: 40px; font-style: italic; opacity: 0.9; border-top: 1px solid rgba(255,255,255,0.1); padding-top: 35px; text-align: center; }
 
-        /* --- Footer --- */
-        .footer { width: 100%; text-align: center; margin-top: 20px; }
-        #clock { font-size: 7.5rem; font-weight: 900; letter-spacing: -3px; line-height: 1; }
-        #date { font-size: 2.2rem; opacity: 0.8; margin-top: 10px; text-transform: uppercase; font-weight: 700; letter-spacing: 2px; }
+        /* --- Footer (Clock) --- */
+        .footer { width: 100%; text-align: center; margin-top: 60px; }
+        #clock { font-size: 10rem; font-weight: 900; letter-spacing: -5px; line-height: 1; }
+        #date { font-size: 3rem; opacity: 0.8; margin-top: 20px; text-transform: uppercase; font-weight: 700; letter-spacing: 4px; }
     </style>
 </head>
 <body>
 
     <div class="header">
-        <div class="hotel-name">PANDANUS BEACH Resort & Spa</div>
+        <div class="hotel-name">PANDANUS BEACH<br>Resort & Spa</div>
         <div class="location">Induruwa • Sri Lanka</div>
     </div>
 
     <div class="main-container">
         <div class="weather-section">
             <div class="icon-box" id="icon">☀️</div>
-            <div style="font-size: 2rem; letter-spacing: 6px; opacity: 0.7; text-transform: uppercase; font-weight: 600;">Feels Like</div>
+            <div class="feels-label">Feels Like</div>
             <div class="temp-main" id="realFeel">--°C</div>
             <div id="description" class="desc">Syncing...</div>
             <div class="temp-actual" id="actualTemp">Actual: --°C</div>
@@ -110,7 +113,7 @@
                 <li>Use sunscreen, sunglasses, and a hat</li>
                 <li>Take breaks in shaded or AC areas</li>
             </ul>
-            <p class="safety-footer">Your safety and comfort are important to us. Take care and enjoy your stay.</p>
+            <p class="safety-footer">Your safety and comfort are important to us.</p>
         </div>
     </div>
 
@@ -155,7 +158,7 @@
         updateTime();
         fetchWeather();
         setInterval(updateTime, 1000);
-        setInterval(fetchWeather, 120000); // Fast update every 2 minutes
+        setInterval(fetchWeather, 120000); // Update every 2 mins
     </script>
 </body>
 </html>
