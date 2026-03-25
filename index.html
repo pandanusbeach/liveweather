@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pandanus Kiosk - Final Fixed</title>
+    <title>Pandanus Kiosk - Balanced Font & Center</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; cursor: none; }
@@ -26,16 +26,16 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 110px 60px;
+            padding: 120px 70px 100px 70px;
             text-align: center;
         }
 
-        /* --- HOTEL NAME --- */
+        /* --- 1. HOTEL NAME --- */
         .header { width: 100%; }
-        .hotel-name { font-size: 4.2rem; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; line-height: 1.2; color: white; }
-        .location { font-size: 2.2rem; opacity: 0.8; margin-top: 15px; color: white; }
+        .hotel-name { font-size: 4rem; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; line-height: 1.2; color: white; }
+        .location { font-size: 2rem; opacity: 0.8; margin-top: 15px; color: white; letter-spacing: 4px; }
 
-        /* --- WEATHER SECTION --- */
+        /* --- 2. WEATHER SECTION --- */
         .weather-box {
             display: flex;
             flex-direction: column;
@@ -45,23 +45,23 @@
         }
 
         .icon-box { 
-            font-size: 16rem; 
+            font-size: 15rem; 
             filter: drop-shadow(0 25px 45px rgba(0,0,0,0.5));
             animation: floatIcon 4s ease-in-out infinite;
-            margin-bottom: 25px; 
+            margin-bottom: 20px; 
         }
 
         @keyframes floatIcon {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-40px); }
+            50% { transform: translateY(-35px); }
         }
 
         .feels-label { font-size: 2.2rem; letter-spacing: 10px; opacity: 0.7; text-transform: uppercase; font-weight: 600; color: white; }
-        .temp-main { font-size: 19rem; font-weight: 900; line-height: 0.85; margin: 25px 0; color: white; }
-        .desc { font-size: 5rem; font-weight: 800; color: #ffeb3b; }
-        .temp-actual { font-size: 3rem; opacity: 0.8; margin-top: 15px; color: white; }
+        .temp-main { font-size: 18rem; font-weight: 900; line-height: 0.85; margin: 25px 0; color: white; }
+        .desc { font-size: 4.8rem; font-weight: 800; color: #ffeb3b; }
+        .temp-actual { font-size: 2.8rem; opacity: 0.8; margin-top: 15px; color: white; }
 
-        /* --- SAFETY CARD --- */
+        /* --- 3. SAFETY CARD --- */
         .safety-card {
             width: 100%;
             background: rgba(255, 255, 255, 0.08);
@@ -70,19 +70,19 @@
             border-radius: 60px;
             border: 2px solid rgba(255, 255, 255, 0.15);
             text-align: left;
-            margin-bottom: 40px;
+            margin-bottom: 60px;
         }
 
         .safety-title { font-size: 3rem; font-weight: 900; color: #ffeb3b; margin-bottom: 30px; text-transform: uppercase; text-align: center; border-bottom: 2px solid rgba(255,255,255,0.2); padding-bottom: 20px; }
         .safety-intro { font-size: 2.2rem; margin-bottom: 35px; line-height: 1.4; font-weight: 700; text-align: center; color: white; }
         .safety-list { list-style: none; }
-        .safety-list li { font-size: 2rem; margin-bottom: 25px; display: flex; align-items: flex-start; font-weight: 600; color: white; }
-        .safety-list li::before { content: "•"; color: #ffeb3b; margin-right: 25px; font-size: 3.5rem; line-height: 0.8; }
+        .safety-list li { font-size: 1.9rem; margin-bottom: 22px; display: flex; align-items: flex-start; font-weight: 600; color: white; }
+        .safety-list li::before { content: "•"; color: #ffeb3b; margin-right: 25px; font-size: 3.2rem; line-height: 0.8; }
 
-        /* --- CLOCK --- */
-        .footer { width: 100%; }
-        #clock { font-size: 8rem; font-weight: 900; letter-spacing: -4px; line-height: 1; margin-bottom: 15px; color: white; }
-        #date { font-size: 3rem; opacity: 0.8; text-transform: uppercase; font-weight: 700; letter-spacing: 5px; color: white; }
+        /* --- 4. CLOCK (FONT SIZE REDUCED AS REQUESTED) --- */
+        .footer { width: 100%; padding-bottom: 20px; }
+        #clock { font-size: 5.5rem; font-weight: 900; letter-spacing: 2px; line-height: 1; margin-bottom: 15px; color: white; }
+        #date { font-size: 2.8rem; opacity: 0.8; text-transform: uppercase; font-weight: 700; letter-spacing: 5px; color: white; }
     </style>
 </head>
 <body>
@@ -100,6 +100,10 @@
             <div id="description" class="desc">Loading...</div>
             <div class="temp-actual" id="actualTemp">Actual Temp: --°C</div>
         </div>
+<br>
+<br>
+<br>
+<br>
 
         <div class="safety-card">
             <div class="safety-title">SAFETY PRECAUTIONS</div>
@@ -125,7 +129,6 @@
 
         async function fetchWeather() {
             try {
-                // මෙතන API link එක නිවැරදි කළා
                 const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current_weather=true&hourly=apparent_temperature&timezone=auto`);
                 const data = await response.json();
                 
@@ -141,19 +144,16 @@
                 let icon = isDay ? '☀️' : '🌙'; 
                 let desc = 'Clear Skies';
                 
-                // Weather codes අනුව icon සහ description වෙනස් කිරීම
                 if (code >= 1 && code <= 3) { icon = isDay ? '⛅' : '☁️'; desc = 'Partly Cloudy'; }
                 else if (code >= 45 && code <= 48) { icon = '🌫️'; desc = 'Foggy'; }
                 else if (code >= 51 && code <= 67) { icon = '🌧️'; desc = 'Rainy'; }
-                else if (code >= 71 && code <= 77) { icon = '❄️'; desc = 'Snowy'; }
                 else if (code >= 80 && code <= 82) { icon = '🌦️'; desc = 'Showers'; }
                 else if (code >= 95) { icon = '⛈️'; desc = 'Thunderstorm'; }
 
                 document.getElementById('icon').innerText = icon;
                 document.getElementById('description').innerText = desc;
             } catch (e) { 
-                console.log("Weather error, retrying..."); 
-                document.getElementById('description').innerText = "Updating...";
+                console.log("Retrying weather update...");
             }
         }
 
@@ -172,14 +172,9 @@
             }).toUpperCase();
         }
 
-        // මුලින්ම එකපාරක් run කිරීම
         updateTime();
         fetchWeather();
-
-        // කාලය තත්පරයෙන් තත්පරයට update කිරීම
         setInterval(updateTime, 1000);
-        
-        // කාලගුණය සෑම විනාඩි 5 කට වරක් update කිරීම
         setInterval(fetchWeather, 300000); 
     </script>
 </body>
