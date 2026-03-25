@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pandanus Smart Kiosk - 10 Min Update</title>
+    <title>Pandanus Smart Kiosk - Fast Update</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; cursor: none; }
@@ -11,16 +11,14 @@
         body {
             color: white; height: 100vh; width: 100vw; overflow: hidden;
             display: flex; flex-direction: column; align-items: center; text-align: center;
-            background-color: #0c1c4e; /* Deep Navy Blue */
+            background-color: #0c1c4e;
             padding: 50px 0;
         }
 
-        /* --- Header --- */
         .header { width: 100%; margin-bottom: 20px; }
         .hotel-name { font-size: 3rem; font-weight: 800; letter-spacing: 4px; text-transform: uppercase; }
         .location { font-size: 1.6rem; opacity: 0.7; font-weight: 300; margin-top: 5px; }
 
-        /* --- Main Content --- */
         .main-content {
             flex-grow: 1;
             display: flex;
@@ -48,19 +46,9 @@
             text-shadow: 0 10px 40px rgba(0,0,0,0.4);
         }
 
-        .desc {
-            font-size: 3.2rem;
-            font-weight: 700;
-            margin-bottom: 10px;
-        }
+        .desc { font-size: 3.2rem; font-weight: 700; margin-bottom: 10px; }
+        .temp-actual { font-size: 1.8rem; opacity: 0.6; margin-bottom: 40px; }
 
-        .temp-actual {
-            font-size: 1.8rem;
-            opacity: 0.6;
-            margin-bottom: 40px;
-        }
-
-        /* --- Advice Card --- */
         .advice-card {
             background: rgba(255, 255, 255, 0.08);
             backdrop-filter: blur(15px);
@@ -69,13 +57,8 @@
             border-radius: 25px;
             border: 1px solid rgba(255,255,255,0.1);
         }
-        .adv-text {
-            font-size: 2.1rem;
-            font-weight: 500;
-            line-height: 1.5;
-        }
+        .adv-text { font-size: 2.1rem; font-weight: 500; line-height: 1.5; }
 
-        /* --- Footer --- */
         .kiosk-footer { width: 100%; margin-top: 30px; }
         #clock { font-size: 6rem; font-weight: 800; letter-spacing: -2px; }
         #date { font-size: 1.7rem; opacity: 0.7; text-transform: uppercase; margin-top: 5px; }
@@ -92,11 +75,11 @@
         <div class="icon-box" id="icon">☀️</div>
         <div style="font-size: 1.6rem; letter-spacing: 5px; opacity: 0.6; text-transform: uppercase;">Feels Like</div>
         <div class="temp-main" id="realFeel">--°C</div>
-        <div id="description" class="desc">Syncing Weather...</div>
+        <div id="description" class="desc">Syncing...</div>
         <div class="temp-actual" id="actualTemp">Actual: --°C</div>
 
         <div class="advice-card">
-            <div class="adv-text" id="kioskAdvice">Please wait, updating information...</div>
+            <div class="adv-text" id="kioskAdvice">Welcome to Pandanus Beach Resort</div>
         </div>
     </div>
 
@@ -110,14 +93,8 @@
         const LON = 80.0033;
 
         async function fetchWeather() {
-            console.log("Weather update triggered at: " + new Date().toLocaleTimeString());
             try {
-                // Open-Meteo API URL
-                const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current_weather=true&hourly=apparent_temperature&timezone=auto`;
-                
-                const response = await fetch(url);
-                if (!response.ok) throw new Error('Network response was not ok');
-                
+                const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current_weather=true&hourly=apparent_temperature&timezone=auto`);
                 const data = await response.json();
 
                 const cur = data.current_weather;
@@ -126,65 +103,48 @@
                 const isDay = cur.is_day === 1;
                 const code = cur.weathercode;
 
-                // Update Temperature values
+                // Update UI Elements
                 document.getElementById('realFeel').innerText = `${realFeel}°C`;
                 document.getElementById('actualTemp').innerText = `Actual Temperature: ${Math.round(cur.temperature)}°C`;
 
-                // Weather Icon & Description Logic
-                let icon = '☀️'; let desc = 'Clear Skies';
-                if (code === 0) { icon = isDay ? '☀️' : '🌙'; desc = 'Clear Skies'; }
-                else if (code <= 3) { icon = isDay ? '⛅' : '☁️'; desc = 'Partly Cloudy'; }
-                else if (code >= 51 && code <= 67) { icon = '🌧️'; desc = 'Rainy'; }
-                else if (code >= 80) { icon = '🌦️'; desc = 'Rain Showers'; }
-                else if (code >= 95) { icon = '⛈️'; desc = 'Thunderstorm'; }
-                
+                // Logic for Icon/Description
+                let icon = isDay ? '☀️' : '🌙'; 
+                let desc = 'Clear Skies';
+
+                if (code >= 1 && code <= 3) { icon = isDay ? '⛅' : '☁️'; desc = 'Partly Cloudy'; }
+                else if (code >= 51) { icon = '🌧️'; desc = 'Rainy Conditions'; }
+
                 document.getElementById('icon').innerText = icon;
                 document.getElementById('description').innerText = desc;
 
-                // Update Advice Text
+                // Update Advice
                 const adviceEl = document.getElementById('kioskAdvice');
                 if (!isDay) {
                     adviceEl.innerText = "Enjoy the calm ocean breeze and our evening hospitality.";
                 } else if (realFeel >= 35) {
                     adviceEl.innerText = "It's a warm day! Stay hydrated and enjoy our chilled refreshments.";
-                } else if (code >= 51) {
-                    adviceEl.innerText = "Expect some rain today. Perfect time for a relaxing spa session.";
                 } else {
                     adviceEl.innerText = "A beautiful tropical day! Perfect for a beach walk or a swim.";
                 }
 
             } catch (error) {
-                console.error("Weather fetch failed:", error);
-                document.getElementById('description').innerText = "Update Pending...";
+                console.log("Weather fetch failed, will retry...");
             }
         }
 
         function updateTime() {
             const now = new Date();
-            // Clock Update
-            document.getElementById('clock').innerText = now.toLocaleTimeString('en-US', { 
-                hour12: true, 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit' 
-            });
-            // Date Update
-            document.getElementById('date').innerText = now.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                month: 'long', 
-                day: 'numeric' 
-            }).toUpperCase();
+            document.getElementById('clock').innerText = now.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('date').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).toUpperCase();
         }
 
-        // Run immediately on load
-        fetchWeather();
+        // Initial Calls
         updateTime();
+        fetchWeather();
 
-        // 10-Minute interval for weather (600,000 milliseconds)
-        setInterval(fetchWeather, 600000); 
-
-        // 1-Second interval for the clock
-        setInterval(updateTime, 1000);
+        // Intervals
+        setInterval(updateTime, 1000); // Clock: 1 sec
+        setInterval(fetchWeather, 120000); // Weather: 2 mins (Fast update)
     </script>
 </body>
 </html>
