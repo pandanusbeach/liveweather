@@ -3,111 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pandanus Kiosk - Balanced Portrait</title>
+    <title>Pandanus Kiosk - White Text Centered</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; cursor: none; }
         
         body {
-            color: white; 
             background-color: #0c1c4e;
-            width: 1080px; 
-            height: 1920px; 
+            width: 100vw;
+            height: 100vh;
             overflow: hidden;
             display: flex;
-            flex-direction: column;
-            align-items: center; 
-            justify-content: space-between; /* විස්තර පේළියට බෙදා හරියි */
-            text-align: center;
-            padding: 120px 60px 80px 60px; /* Top and Bottom padding adjusted */
+            justify-content: center;
+            align-items: center;
+            color: white !important; /* සියලුම අකුරු සුදු පාට කළා */
         }
 
-        /* --- 1. HOTEL NAME --- */
-        .header { width: 100%; margin-bottom: 20px; }
-        .hotel-name { font-size: 4.5rem; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; line-height: 1.2; }
-        .location { font-size: 2.2rem; opacity: 0.7; margin-top: 15px; letter-spacing: 4px; }
+        .main-wrapper {
+            width: 1080px;
+            height: 1920px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-between;
+            padding: 100px 60px 100px 60px;
+        }
 
-        /* --- 2. WEATHER SECTION --- */
+        /* --- HOTEL NAME (WHITE) --- */
+        .header { width: 100%; text-align: center; color: white; }
+        .hotel-name { font-size: 4rem; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; line-height: 1.2; color: white; }
+        .location { font-size: 2rem; opacity: 0.8; margin-top: 15px; letter-spacing: 4px; color: white; }
+
+        /* --- WEATHER SECTION --- */
         .weather-box {
             display: flex;
             flex-direction: column;
             align-items: center;
-            flex-grow: 1; /* මැද කොටසට වැඩි ඉඩක් ලබා දෙයි */
             justify-content: center;
+            flex-grow: 1;
+            color: white;
         }
 
         .icon-box { 
-            font-size: 17rem; 
+            font-size: 15rem; 
             filter: drop-shadow(0 25px 45px rgba(0,0,0,0.5));
             animation: floatIcon 4s ease-in-out infinite;
-            margin-bottom: 30px; 
+            margin-bottom: 20px; 
         }
 
         @keyframes floatIcon {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-40px); }
+            50% { transform: translateY(-30px); }
         }
 
-        .feels-label { font-size: 2.4rem; letter-spacing: 10px; opacity: 0.6; text-transform: uppercase; font-weight: 600; }
-        .temp-main { font-size: 20rem; font-weight: 900; line-height: 0.85; margin: 25px 0; text-shadow: 0 15px 40px rgba(0,0,0,0.3); }
-        .desc { font-size: 5rem; font-weight: 800; color: #ffeb3b; }
-        .temp-actual { font-size: 3rem; opacity: 0.8; margin-top: 15px; font-weight: 500; }
+        .feels-label { font-size: 2.2rem; letter-spacing: 10px; opacity: 0.7; text-transform: uppercase; font-weight: 600; color: white; }
+        .temp-main { font-size: 18rem; font-weight: 900; line-height: 0.85; margin: 20px 0; color: white; text-shadow: 0 10px 30px rgba(0,0,0,0.3); }
+        .desc { font-size: 4.5rem; font-weight: 800; color: #ffeb3b; } /* විස්තරය පමණක් කහ පාටයි */
+        .temp-actual { font-size: 2.8rem; opacity: 0.8; margin-top: 10px; font-weight: 500; color: white; }
 
-        /* --- 3. SAFETY ADVICE CARD --- */
+        /* --- SAFETY CARD --- */
         .safety-card {
             width: 100%;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.1);
             backdrop-filter: blur(25px);
-            padding: 55px;
+            padding: 50px;
             border-radius: 60px;
-            border: 2px solid rgba(255, 255, 255, 0.12);
+            border: 2px solid rgba(255, 255, 255, 0.15);
             text-align: left;
-            margin-bottom: 60px; /* පහළ තියෙන Clock එකත් එක්ක ඉඩක් තබයි */
-            box-shadow: 0 30px 60px rgba(0,0,0,0.3);
+            margin-bottom: 40px;
+            color: white;
         }
 
-        .safety-title { font-size: 3.2rem; font-weight: 900; color: #ffeb3b; margin-bottom: 35px; text-transform: uppercase; text-align: center; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
-        .safety-intro { font-size: 2.2rem; margin-bottom: 35px; line-height: 1.4; font-weight: 700; text-align: center; }
-        .safety-list { list-style: none; }
-        .safety-list li { font-size: 2rem; margin-bottom: 25px; display: flex; align-items: flex-start; font-weight: 600; }
-        .safety-list li::before { content: "•"; color: #ffeb3b; margin-right: 25px; font-size: 3.5rem; line-height: 0.8; }
+        .safety-title { font-size: 2.8rem; font-weight: 900; color: #ffeb3b; margin-bottom: 30px; text-transform: uppercase; text-align: center; border-bottom: 2px solid rgba(255,255,255,0.2); padding-bottom: 15px; }
+        .safety-intro { font-size: 2rem; margin-bottom: 30px; line-height: 1.4; font-weight: 700; text-align: center; color: white; }
+        .safety-list li { font-size: 1.8rem; margin-bottom: 20px; display: flex; align-items: flex-start; font-weight: 600; color: white; }
+        .safety-list li::before { content: "•"; color: #ffeb3b; margin-right: 20px; font-size: 3rem; line-height: 0.8; }
 
-        /* --- 4. LIVE CLOCK --- */
-        .footer { width: 100%; }
-        #clock { font-size: 11rem; font-weight: 900; letter-spacing: -6px; line-height: 1; margin-bottom: 10px; }
-        #date { font-size: 3.2rem; opacity: 0.8; text-transform: uppercase; font-weight: 700; letter-spacing: 5px; }
+        /* --- CLOCK (REDUCED SIZE & WHITE) --- */
+        .footer { width: 100%; text-align: center; color: white; }
+        #clock { font-size: 7.5rem; font-weight: 900; letter-spacing: -4px; line-height: 1; margin-bottom: 10px; color: white; }
+        #date { font-size: 2.8rem; opacity: 0.8; text-transform: uppercase; font-weight: 700; letter-spacing: 5px; color: white; }
     </style>
 </head>
 <body>
 
-    <div class="header">
-        <div class="hotel-name">PANDANUS BEACH<br>RESORT & SPA</div>
-        <div class="location">Induruwa • Sri Lanka</div>
-    </div>
+    <div class="main-wrapper">
+        <div class="header">
+            <div class="hotel-name">PANDANUS BEACH<br>RESORT & SPA</div>
+            <div class="location">Induruwa • Sri Lanka</div>
+        </div>
 
-    <div class="weather-box">
-        <div class="icon-box" id="icon">☀️</div>
-        <div class="feels-label">FEELS LIKE</div>
-        <div class="temp-main" id="realFeel">--°C</div>
-        <div id="description" class="desc">Syncing...</div>
-        <div class="temp-actual" id="actualTemp">Actual Temp: --°C</div>
-    </div>
+        <div class="weather-box">
+            <div class="icon-box" id="icon">☀️</div>
+            <div class="feels-label">FEELS LIKE</div>
+            <div class="temp-main" id="realFeel">--°C</div>
+            <div id="description" class="desc">Syncing...</div>
+            <div class="temp-actual" id="actualTemp">Actual Temp: --°C</div>
+        </div>
 
-    <div class="safety-card">
-        <div class="safety-title">SAFETY PRECAUTIONS</div>
-        <p class="safety-intro">Due to high temperatures, guests are kindly advised to take precautions:</p>
-        <ul class="safety-list">
-            <li>Avoid direct sunlight (11:00 AM – 3:00 PM)</li>
-            <li>Stay well hydrated - drink plenty of water</li>
-            <li>Wear light, breathable clothing</li>
-            <li>Use sunscreen, sunglasses, and a hat</li>
-            <li>Take breaks in shaded or AC areas</li>
-        </ul>
-    </div>
+        <div class="safety-card">
+            <div class="safety-title">SAFETY PRECAUTIONS</div>
+            <p class="safety-intro">Due to high temperatures, guests are kindly advised to take precautions:</p>
+            <ul class="safety-list" style="list-style: none;">
+                <li>Avoid direct sunlight (11:00 AM – 3:00 PM)</li>
+                <li>Stay well hydrated - drink plenty of water</li>
+                <li>Wear light, breathable clothing</li>
+                <li>Use sunscreen, sunglasses, and a hat</li>
+                <li>Take breaks in shaded or AC areas</li>
+            </ul>
+        </div>
 
-    <div class="footer">
-        <div id="clock">00:00:00</div>
-        <div id="date">--</div>
+        <div class="footer">
+            <div id="clock">00:00:00</div>
+            <div id="date">--</div>
+        </div>
     </div>
 
     <script>
@@ -146,7 +155,7 @@
         updateTime();
         fetchWeather();
         setInterval(updateTime, 1000);
-        setInterval(fetchWeather, 600000); // 10 Min update as requested
+        setInterval(fetchWeather, 300000); 
     </script>
 </body>
 </html>
