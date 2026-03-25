@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Pandanus Beach Live Kiosk</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Segoe UI', Roboto, sans-serif; }
+        
+        body {
+            transition: background 2s ease;
+            color: white; height: 100vh; width: 100vw; overflow: hidden;
+            display: flex; flex-direction: column; align-items: center;
+            text-align: center; cursor: none;
+        }
+
+        .day-bg { background: linear-gradient(180deg, #00b4d8 0%, #0077b6 100%); }
+        .night-bg { background: linear-gradient(180deg, #03045e 0%, #023e8a 100%); }
+
+        /* Header */
+        .header { padding-top: 60px; width: 100%; }
+        .hotel-name { font-size: 3rem; font-weight: 900; letter-spacing: 3px; text-shadow: 0 5px 15px rgba(0,0,0,0.3); }
+        .location { font-size: 1.8rem; opacity: 0.8; font-weight: 300; }
+
+        /* Weather Main Area */
+        .weather-content { flex-grow: 1; display: flex; flex-direction: column; justify-content: center; width: 100%; margin-top: -50px; }
+        
+        /* Animated Icon */
+        .icon-box {
+            font-size: 13rem;
+            animation: float 4s ease-in-out infinite;
+            filter: drop-shadow(0 15px 25px rgba(0,0,0,0.3));
+            margin-bottom: 10px;
+        }
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+            100% { transform: translateY(0px); }
+        }
+
+        .label { font-size: 1.8rem; text-transform: uppercase; letter-spacing: 4px; opacity: 0.7; margin-bottom: 5px; }
+        .temp-main { font-size: 12rem; font-weight: 900; line-height: 0.9; text-shadow: 0 10px 40px rgba(0,0,0,0.4); }
+        .temp-actual { font-size: 2.2rem; opacity: 0.6; margin-top: 15px; font-weight: 400; }
+        .desc { font-size: 3.5rem; font-weight: 700; margin: 25px 0; color: #fff; text-shadow: 0 4px 10px rgba(0,0,0,0.2); }
+
+        /* Advice Box */
+        .advice-container { width: 100%; display: flex; justify-content: center; padding-bottom: 40px; }
+        .advice-card {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            width: 85%; padding: 30px; border-radius: 35px;
+            border: 1px solid rgba(255,255,255,0.2);
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+        .adv-title { font-size: 1.5rem; font-weight: 800; text-transform: uppercase; color: #ffeb3b; margin-bottom: 10px; }
+        .adv-text { font-size: 2rem; font-weight: 500; line-height: 1.4; }
+
+        /* Fixed Footer Time */
+        .kiosk-footer {
+            width: 100%;
+            background: rgba(0, 0, 0, 0.3);
+            padding: 40px 0;
+            border-top: 2px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(10px);
+        }
+        .time-now { font-size: 6.5rem; font-weight: 800; letter-spacing: -2px; line-height: 1; }
+        .date-now { font-size: 2rem; opacity: 0.8; margin-top: 10px; font-weight: 300; letter-spacing: 1px; }
+    </style>
+</head>
+<body class="night-bg" id="bg">
+
+    <div class="header">
+        <div class="hotel-name">PANDANUS BEACH</div>
+        <div class="location">Induruwa, Sri Lanka</div>
+    </div>
+
+    <div class="weather-content">
+        <div class="icon-box" id="icon">🌙</div>
+        <div class="label">Feels Like</div>
+        <div class="temp-main" id="realFeel">--°C</div>
+        <div id="description" class="desc">Updating...</div>
+        <div class="temp-actual" id="actualTemp">Actual Temperature: --°C</div>
+    </div>
+
+    <div class="advice-container">
+        <div class="advice-card" id="adviceCard">
+            <div class="adv-title" id="advTitle">GUEST ADVICE</div>
+            <div class="adv-text" id="advText">Welcome to Pandanus Beach Resort.</div>
+        </div>
+    </div>
+
+    <footer class="kiosk-footer">
+        <div class="time-now" id="clock">00:00:00</div>
+        <div class="date-now" id="date">--</div>
+    </footer>
+
+    <script>
+        const LAT = 6.4025;
+        const LON = 80.0033;
+
+        async function fetchWeather() {
+            try {
+                const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current_weather=true&hourly=apparent_temperature&timezone=auto`;
+                const response = await fetch(url);
+                const data = await response.json();
+
+                const cur = data.current_weather;
+                const hour = new Date().getHours();
+                const realFeel = Math.round(data.hourly.apparent_temperature[hour]);
+                const isDay = cur.is_day === 1;
+
+                // Update UI
+                document.getElementById('bg').className = isDay ? 'day-bg' : 'night-bg';
+                document.getElementById('realFeel').innerText = `${realFeel}°C`;
+                document.getElementById('actualTemp').innerText = `Actual Temperature: ${Math.round(cur.temperature)}°C`;
+
+                let icon = '☀️'; let desc = 'Clear Sky';
+                if (cur.weathercode === 0) { icon = isDay ? '☀️' : '🌙'; desc = 'Clear Skies'; }
+                else if (cur.weathercode <= 3) { icon = isDay ? '⛅' : '☁️'; desc = 'Partly Cloudy'; }
+                else if (cur.weathercode >= 51) { icon = '🌧️'; desc = 'Rainy Weather'; }
+                
+                document.getElementById('icon').innerText = icon;
+                document.getElementById('description').innerText = desc;
+
+                // Dynamic Advice
+                const title = document.getElementById('advTitle');
+                const text = document.getElementById('advText');
+                if (realFeel >= 35) {
+                    title.innerText = "⚠️ Heat Advisory";
+                    text.innerText = "It's very warm. We recommend staying hydrated and enjoying our chilled juices.";
+                } else if (!isDay) {
+                    title.innerText = "🌙 Night Greetings";
+                    text.innerText = "Enjoy the calm ocean breeze and our evening hospitality.";
+                } else {
+                    title.innerText = "🌴 Travel Tip";
+                    text.innerText = "Beautiful weather for a beach walk or a dip in the pool.";
+                }
+
+            } catch (e) { console.error("Update failed"); }
+        }
+
+        function updateTime() {
+            const now = new Date();
+            document.getElementById('clock').innerText = now.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('date').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).toUpperCase();
+        }
+
+        fetchWeather();
+        updateTime();
+        setInterval(fetchWeather, 900000); 
+        setInterval(updateTime, 1000);
+    </script>
+</body>
+</html>
