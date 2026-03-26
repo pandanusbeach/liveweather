@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pandanus Kiosk - Software Optimized</title>
+    <title>Pandanus Kiosk - Ultimate Stability</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; cursor: none; }
@@ -117,11 +117,11 @@
             <div class="safety-title">SAFETY PRECAUTIONS</div>
             <p class="safety-intro">Due to high temperatures, guests are kindly advised to take precautions:</p>
             <ul class="safety-list">
-                <li>Avoid direct sunlight (11:00 AM – 3:00 PM)</li>
-                <li>Stay well hydrated - drink plenty of water</li>
-                <li>Wear light, breathable clothing</li>
-                <li>Use sunscreen, sunglasses, and a hat</li>
-                <li>Take breaks in shaded or AC areas</li>
+                <li>• Avoid direct sunlight (11:00 AM – 3:00 PM)</li>
+                <li>• Stay well hydrated - drink plenty of water</li>
+                <li>• Wear light, breathable clothing</li>
+                <li>• Use sunscreen, sunglasses, and a hat</li>
+                <li>• Take breaks in shaded or AC areas</li>
             </ul>
         </div>
 
@@ -137,11 +137,11 @@
 
         async function fetchWeather() {
             try {
-                // Cache එක bypass කරන්න random අගයක් URL එකට එකතු කරනවා (Timestamp)
-                const cacheBuster = new Date().getTime();
-                const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&hourly=precipitation_probability&timezone=auto&_=${cacheBuster}`;
+                // Cache bypass optimization
+                const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&hourly=precipitation_probability&timezone=auto&_=${new Date().getTime()}`;
                 
                 const response = await fetch(url);
+                if (!response.ok) throw new Error();
                 const data = await response.json();
                 
                 if (data && data.current) {
@@ -169,6 +169,7 @@
                 }
             } catch (e) { 
                 console.log("Weather error, will retry...");
+                document.getElementById('description').innerText = "Updating Weather...";
             }
         }
 
@@ -181,7 +182,7 @@
         updateTime();
         fetchWeather();
         setInterval(updateTime, 1000);
-        setInterval(fetchWeather, 300000); // 5 mins
+        setInterval(fetchWeather, 300000); 
     </script>
 </body>
 </html>
