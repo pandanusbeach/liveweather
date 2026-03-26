@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pandanus Kiosk - Weather Fixed</title>
+    <title>Pandanus Kiosk - Final Stability Fix</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; cursor: none; }
@@ -103,7 +103,7 @@
             <div class="icon-box" id="icon">☀️</div>
             <div class="feels-label">FEELS LIKE</div>
             <div class="temp-main" id="realFeel">--°C</div>
-            <div id="description" class="desc">Connecting...</div>
+            <div id="description" class="desc">Loading...</div>
             <div class="temp-actual" id="actualTemp">Actual: --°C</div>
             
             <div class="detail-bar">
@@ -146,10 +146,15 @@
 
         async function fetchWeather() {
             try {
-                // වඩාත් ස්ථාවර API URL එකක් භාවිතා කළා
-                const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&hourly=precipitation_probability&timezone=auto`);
+                // Timeout එකක් එකතු කළා API එක හිර වුණොත් අයින් වෙන්න
+                const controller = new AbortController();
+                const timeoutId = setTimeout(() => controller.abort(), 10000);
+
+                const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&hourly=precipitation_probability&timezone=auto`, { signal: controller.signal });
                 
-                if (!response.ok) throw new Error('Network Error');
+                clearTimeout(timeoutId);
+
+                if (!response.ok) throw new Error('API Error');
                 
                 const data = await response.json();
                 const cur = data.current;
@@ -167,7 +172,6 @@
 
                 let icon = isDay ? '☀️' : '🌙'; 
                 let desc = 'Clear Skies';
-                
                 if (code >= 1 && code <= 3) { icon = isDay ? '⛅' : '☁️'; desc = 'Partly Cloudy'; }
                 else if (code >= 51 && code <= 67) { icon = '🌧️'; desc = 'Rainy'; }
                 else if (code >= 80 && code <= 82) { icon = '🌦️'; desc = 'Showers'; }
@@ -176,25 +180,22 @@
                 document.getElementById('icon').innerText = icon;
                 document.getElementById('description').innerText = desc;
             } catch (e) { 
-                console.error(e);
-                document.getElementById('description').innerText = "Offline/Updating";
+                console.error("Weather error:", e);
+                // වැරදීමක් වුණොත් පෙන්වන දේවල්
+                document.getElementById('description').innerText = "Check Connection";
             }
         }
 
         function updateTime() {
             const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString('en-US', { 
-                hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' 
-            });
-            document.getElementById('date').innerText = now.toLocaleDateString('en-US', { 
-                weekday: 'long', month: 'long', day: 'numeric' 
-            }).toUpperCase();
+            document.getElementById('clock').innerText = now.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            document.getElementById('date').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).toUpperCase();
         }
 
         updateTime();
         fetchWeather();
         setInterval(updateTime, 1000);
-        setInterval(fetchWeather, 300000); 
+        setInterval(fetchWeather, 600000); 
     </script>
 </body>
 </html>
