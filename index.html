@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pandanus Kiosk - Balanced Font & Center</title>
+    <title>Pandanus Kiosk - Weather Fixed</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; cursor: none; }
@@ -26,16 +26,14 @@
             flex-direction: column;
             align-items: center;
             justify-content: space-between;
-            padding: 120px 70px 100px 70px;
+            padding: 110px 70px 90px 70px;
             text-align: center;
         }
 
-        /* --- 1. HOTEL NAME --- */
         .header { width: 100%; }
-        .hotel-name { font-size: 4rem; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; line-height: 1.2; color: white; }
-        .location { font-size: 2rem; opacity: 0.8; margin-top: 15px; color: white; letter-spacing: 4px; }
+        .hotel-name { font-size: 4rem; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; line-height: 1.2; }
+        .location { font-size: 2rem; opacity: 0.8; margin-top: 15px; letter-spacing: 4px; }
 
-        /* --- 2. WEATHER SECTION --- */
         .weather-box {
             display: flex;
             flex-direction: column;
@@ -45,23 +43,34 @@
         }
 
         .icon-box { 
-            font-size: 15rem; 
+            font-size: 14rem; 
             filter: drop-shadow(0 25px 45px rgba(0,0,0,0.5));
             animation: floatIcon 4s ease-in-out infinite;
-            margin-bottom: 20px; 
+            margin-bottom: 10px; 
         }
 
         @keyframes floatIcon {
             0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-35px); }
+            50% { transform: translateY(-30px); }
         }
 
-        .feels-label { font-size: 2.2rem; letter-spacing: 10px; opacity: 0.7; text-transform: uppercase; font-weight: 600; color: white; }
-        .temp-main { font-size: 18rem; font-weight: 900; line-height: 0.85; margin: 25px 0; color: white; }
-        .desc { font-size: 4.8rem; font-weight: 800; color: #ffeb3b; }
-        .temp-actual { font-size: 2.8rem; opacity: 0.8; margin-top: 15px; color: white; }
+        .feels-label { font-size: 2rem; letter-spacing: 10px; opacity: 0.7; text-transform: uppercase; font-weight: 600; }
+        .temp-main { font-size: 17rem; font-weight: 900; line-height: 0.85; margin: 15px 0; }
+        .desc { font-size: 4.5rem; font-weight: 800; color: #ffeb3b; margin-bottom: 10px; }
+        .temp-actual { font-size: 2.5rem; opacity: 0.9; margin-bottom: 25px; }
 
-        /* --- 3. SAFETY CARD --- */
+        .detail-bar {
+            display: flex;
+            gap: 40px;
+            background: rgba(255, 255, 255, 0.05);
+            padding: 20px 40px;
+            border-radius: 30px;
+            border: 1px solid rgba(255,255,255,0.1);
+        }
+        .detail-item { display: flex; flex-direction: column; gap: 5px; min-width: 120px; }
+        .detail-label { font-size: 1.1rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
+        .detail-value { font-size: 2.1rem; font-weight: 800; }
+
         .safety-card {
             width: 100%;
             background: rgba(255, 255, 255, 0.08);
@@ -70,19 +79,16 @@
             border-radius: 60px;
             border: 2px solid rgba(255, 255, 255, 0.15);
             text-align: left;
-            margin-bottom: 60px;
+            margin: 30px 0;
         }
+        .safety-title { font-size: 2.8rem; font-weight: 900; color: #ffeb3b; margin-bottom: 25px; text-transform: uppercase; text-align: center; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
+        .safety-intro { font-size: 2rem; margin-bottom: 25px; line-height: 1.4; font-weight: 700; text-align: center; }
+        .safety-list li { font-size: 1.9rem; margin-bottom: 18px; display: flex; align-items: flex-start; font-weight: 600; list-style: none; }
+        .safety-list li::before { content: "•"; color: #ffeb3b; margin-right: 20px; font-size: 3rem; line-height: 0.8; }
 
-        .safety-title { font-size: 3rem; font-weight: 900; color: #ffeb3b; margin-bottom: 30px; text-transform: uppercase; text-align: center; border-bottom: 2px solid rgba(255,255,255,0.2); padding-bottom: 20px; }
-        .safety-intro { font-size: 2.2rem; margin-bottom: 35px; line-height: 1.4; font-weight: 700; text-align: center; color: white; }
-        .safety-list { list-style: none; }
-        .safety-list li { font-size: 1.9rem; margin-bottom: 22px; display: flex; align-items: flex-start; font-weight: 600; color: white; }
-        .safety-list li::before { content: "•"; color: #ffeb3b; margin-right: 25px; font-size: 3.2rem; line-height: 0.8; }
-
-        /* --- 4. CLOCK (FONT SIZE REDUCED AS REQUESTED) --- */
-        .footer { width: 100%; padding-bottom: 20px; }
-        #clock { font-size: 5.5rem; font-weight: 900; letter-spacing: 2px; line-height: 1; margin-bottom: 15px; color: white; }
-        #date { font-size: 2.8rem; opacity: 0.8; text-transform: uppercase; font-weight: 700; letter-spacing: 5px; color: white; }
+        .footer { width: 100%; }
+        #clock { font-size: 5rem; font-weight: 900; letter-spacing: 2px; line-height: 1; margin-bottom: 10px; }
+        #date { font-size: 2.6rem; opacity: 0.8; text-transform: uppercase; font-weight: 700; letter-spacing: 5px; }
     </style>
 </head>
 <body>
@@ -98,12 +104,23 @@
             <div class="feels-label">FEELS LIKE</div>
             <div class="temp-main" id="realFeel">--°C</div>
             <div id="description" class="desc">Loading...</div>
-            <div class="temp-actual" id="actualTemp">Actual Temp: --°C</div>
+            <div class="temp-actual" id="actualTemp">Actual: --°C</div>
+            
+            <div class="detail-bar">
+                <div class="detail-item">
+                    <span class="detail-label">Rain</span>
+                    <span class="detail-value" id="precip">--%</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Humidity</span>
+                    <span class="detail-value" id="humidity">--%</span>
+                </div>
+                <div class="detail-item">
+                    <span class="detail-label">Wind</span>
+                    <span class="detail-value" id="wind">-- km/h</span>
+                </div>
+            </div>
         </div>
-<br>
-<br>
-<br>
-<br>
 
         <div class="safety-card">
             <div class="safety-title">SAFETY PRECAUTIONS</div>
@@ -129,23 +146,30 @@
 
         async function fetchWeather() {
             try {
-                const response = await fetch(`https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current_weather=true&hourly=apparent_temperature&timezone=auto`);
+                // API URL එක නිවැරදි කර current සහ hourly දත්ත එකතු කළා
+                const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&hourly=precipitation_probability&timezone=auto`;
+                const response = await fetch(url);
                 const data = await response.json();
                 
-                const cur = data.current_weather;
-                const hour = new Date().getHours();
-                const realFeel = Math.round(data.hourly.apparent_temperature[hour]);
-                const isDay = cur.is_day === 1;
-                const code = cur.weathercode;
+                const current = data.current;
+                const hourIndex = new Date().getHours();
+                const precipProb = data.hourly.precipitation_probability[hourIndex];
 
-                document.getElementById('realFeel').innerText = `${realFeel}°C`;
-                document.getElementById('actualTemp').innerText = `Actual Temp: ${Math.round(cur.temperature)}°C`;
+                // අගයන් update කිරීම
+                document.getElementById('realFeel').innerText = `${Math.round(current.apparent_temperature)}°C`;
+                document.getElementById('actualTemp').innerText = `Actual: ${Math.round(current.temperature_2m)}°C`;
+                document.getElementById('humidity').innerText = `${current.relative_humidity_2m}%`;
+                document.getElementById('wind').innerText = `${Math.round(current.wind_speed_10m)} km/h`;
+                document.getElementById('precip').innerText = `${precipProb}%`;
+
+                const code = current.weather_code;
+                const hour = new Date().getHours();
+                const isDay = hour > 6 && hour < 18;
 
                 let icon = isDay ? '☀️' : '🌙'; 
                 let desc = 'Clear Skies';
                 
                 if (code >= 1 && code <= 3) { icon = isDay ? '⛅' : '☁️'; desc = 'Partly Cloudy'; }
-                else if (code >= 45 && code <= 48) { icon = '🌫️'; desc = 'Foggy'; }
                 else if (code >= 51 && code <= 67) { icon = '🌧️'; desc = 'Rainy'; }
                 else if (code >= 80 && code <= 82) { icon = '🌦️'; desc = 'Showers'; }
                 else if (code >= 95) { icon = '⛈️'; desc = 'Thunderstorm'; }
@@ -153,29 +177,25 @@
                 document.getElementById('icon').innerText = icon;
                 document.getElementById('description').innerText = desc;
             } catch (e) { 
-                console.log("Retrying weather update...");
+                console.log("Weather fetch failed. Retrying...");
+                document.getElementById('description').innerText = "Updating...";
             }
         }
 
         function updateTime() {
             const now = new Date();
             document.getElementById('clock').innerText = now.toLocaleTimeString('en-US', { 
-                hour12: true, 
-                hour: '2-digit', 
-                minute: '2-digit', 
-                second: '2-digit' 
+                hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' 
             });
             document.getElementById('date').innerText = now.toLocaleDateString('en-US', { 
-                weekday: 'long', 
-                month: 'long', 
-                day: 'numeric' 
+                weekday: 'long', month: 'long', day: 'numeric' 
             }).toUpperCase();
         }
 
         updateTime();
         fetchWeather();
         setInterval(updateTime, 1000);
-        setInterval(fetchWeather, 300000); 
+        setInterval(fetchWeather, 300000); // විනාඩි 5 කින් update වේ
     </script>
 </body>
 </html>
