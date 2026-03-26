@@ -1,128 +1,78 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Pandanus Kiosk - Ultimate Stability</title>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+    <title>Pandanus Kiosk - Full Weather Support</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Montserrat', sans-serif; cursor: none; }
+        body { background-color: #0c1c4e; color: white; margin: 0; font-family: 'Montserrat', sans-serif; text-align: center; overflow: hidden; }
+        .wrapper { width: 1080px; height: 1920px; display: table; margin: 0 auto; padding: 110px 0; }
         
-        body {
-            background-color: #0c1c4e;
-            width: 100vw;
-            height: 100vh;
-            overflow: hidden;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            color: white !important;
-        }
+        .hotel-name { font-size: 42pt; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; line-height: 1.2; }
+        .location { font-size: 20pt; opacity: 0.8; margin-top: 15px; letter-spacing: 4px; }
 
-        .main-wrapper {
-            width: 1080px;
-            height: 1920px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: space-between;
-            padding: 110px 70px 90px 70px;
-            text-align: center;
-        }
-
-        .header { width: 100%; }
-        .hotel-name { font-size: 4rem; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; line-height: 1.2; }
-        .location { font-size: 2rem; opacity: 0.8; margin-top: 15px; letter-spacing: 4px; }
-
-        .weather-box {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            flex-grow: 1;
-        }
-
-        .icon-box { 
-            font-size: 14rem; 
-            filter: drop-shadow(0 25px 45px rgba(0,0,0,0.5));
-            animation: floatIcon 4s ease-in-out infinite;
-            margin-bottom: 10px; 
-        }
-
-        @keyframes floatIcon {
-            0%, 100% { transform: translateY(0); }
-            50% { transform: translateY(-30px); }
-        }
-
-        .feels-label { font-size: 2rem; letter-spacing: 10px; opacity: 0.7; text-transform: uppercase; font-weight: 600; }
-        .temp-main { font-size: 17rem; font-weight: 900; line-height: 0.85; margin: 15px 0; }
-        .desc { font-size: 4.5rem; font-weight: 800; color: #ffeb3b; margin-bottom: 10px; }
-        .temp-actual { font-size: 2.5rem; opacity: 0.9; margin-bottom: 25px; }
-
-        .detail-bar {
-            display: flex;
-            gap: 40px;
-            background: rgba(255, 255, 255, 0.05);
-            padding: 20px 40px;
-            border-radius: 30px;
+        .icon-box { font-size: 130pt; margin: 50px 0 20px 0; }
+        .feels-label { font-size: 22pt; letter-spacing: 8px; opacity: 0.7; font-weight: 700; }
+        .temp-main { font-size: 165pt; font-weight: 900; line-height: 1; margin: 10px 0; }
+        .desc { font-size: 48pt; font-weight: 800; color: #ffeb3b; margin-bottom: 15px; }
+        .temp-actual { font-size: 28pt; opacity: 0.9; margin-bottom: 35px; }
+        
+        .detail-bar { 
+            background: rgba(255, 255, 255, 0.1); 
+            padding: 30px; 
+            border-radius: 40px; 
+            width: 85%; 
+            margin: 0 auto; 
+            font-size: 24pt;
+            font-weight: 800;
             border: 1px solid rgba(255,255,255,0.1);
         }
-        .detail-item { display: flex; flex-direction: column; gap: 5px; min-width: 120px; }
-        .detail-label { font-size: 1.1rem; opacity: 0.6; text-transform: uppercase; letter-spacing: 2px; font-weight: 700; }
-        .detail-value { font-size: 2.1rem; font-weight: 800; }
-
-        .safety-card {
-            width: 100%;
-            background: rgba(255, 255, 255, 0.08);
-            backdrop-filter: blur(25px);
-            padding: 55px;
-            border-radius: 60px;
-            border: 2px solid rgba(255, 255, 255, 0.15);
+        
+        .safety-card { 
+            background: rgba(255, 255, 255, 0.08); 
+            padding: 55px; 
+            border-radius: 60px; 
+            width: 85%; 
+            margin: 60px auto; 
             text-align: left;
-            margin: 30px 0;
+            border: 2px solid rgba(255, 255, 255, 0.15);
         }
-        .safety-title { font-size: 2.8rem; font-weight: 900; color: #ffeb3b; margin-bottom: 25px; text-transform: uppercase; text-align: center; border-bottom: 2px solid rgba(255,255,255,0.1); padding-bottom: 15px; }
-        .safety-intro { font-size: 2rem; margin-bottom: 25px; line-height: 1.4; font-weight: 700; text-align: center; }
-        .safety-list li { font-size: 1.9rem; margin-bottom: 18px; display: flex; align-items: flex-start; font-weight: 600; list-style: none; }
-        .safety-list li::before { content: "•"; color: #ffeb3b; margin-right: 20px; font-size: 3rem; line-height: 0.8; }
-
-        .footer { width: 100%; }
-        #clock { font-size: 5.5rem; font-weight: 900; letter-spacing: 2px; line-height: 1; margin-bottom: 10px; }
-        #date { font-size: 2.6rem; opacity: 0.8; text-transform: uppercase; font-weight: 700; letter-spacing: 5px; }
+        .safety-title { font-size: 32pt; font-weight: 900; color: #ffeb3b; text-align: center; margin-bottom: 25px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 15px; }
+        
+        #clock { font-size: 75pt; font-weight: 900; margin-top: 60px; letter-spacing: 2px; }
+        #date { font-size: 28pt; opacity: 0.8; font-weight: 700; letter-spacing: 3px; }
     </style>
 </head>
 <body>
-
-    <div class="main-wrapper">
+    <div class="wrapper">
         <div class="header">
             <div class="hotel-name">PANDANUS BEACH<br>RESORT & SPA</div>
             <div class="location">Induruwa • Sri Lanka</div>
         </div>
-
+        
         <div class="weather-box">
-            <div class="icon-box" id="icon">☀️</div>
+            <div id="icon" class="icon-box">☀️</div>
             <div class="feels-label">FEELS LIKE</div>
             <div class="temp-main" id="realFeel">--°C</div>
-            <div id="description" class="desc">Syncing...</div>
+            <div id="description" class="desc">Updating...</div>
             <div class="temp-actual" id="actualTemp">Actual: --°C</div>
             
             <div class="detail-bar">
-                <div class="detail-item"><span class="detail-label">Rain</span><span class="detail-value" id="precip">--%</span></div>
-                <div class="detail-item"><span class="detail-label">Humidity</span><span class="detail-value" id="humidity">--%</span></div>
-                <div class="detail-item"><span class="detail-label">Wind</span><span class="detail-value" id="wind">-- km/h</span></div>
+                Rain: <span id="precip" style="color:#ffeb3b">--%</span> | 
+                Humidity: <span id="humidity" style="color:#ffeb3b">--%</span> | 
+                Wind: <span id="wind" style="color:#ffeb3b">-- km/h</span>
             </div>
         </div>
 
         <div class="safety-card">
             <div class="safety-title">SAFETY PRECAUTIONS</div>
-            <p class="safety-intro">Due to high temperatures, guests are kindly advised to take precautions:</p>
-            <ul class="safety-list">
-                <li>• Avoid direct sunlight (11:00 AM – 3:00 PM)</li>
-                <li>• Stay well hydrated - drink plenty of water</li>
-                <li>• Wear light, breathable clothing</li>
-                <li>• Use sunscreen, sunglasses, and a hat</li>
-                <li>• Take breaks in shaded or AC areas</li>
-            </ul>
+            <div style="font-size: 22pt; line-height: 2; font-weight: 700;">
+                • Avoid direct sunlight (11:00 AM – 3:00 PM)<br>
+                • Stay well hydrated - drink plenty of water<br>
+                • Wear light, breathable clothing<br>
+                • Use sunscreen, sunglasses, and a hat<br>
+                • Take breaks in shaded or AC areas
+            </div>
         </div>
 
         <div class="footer">
@@ -131,58 +81,65 @@
         </div>
     </div>
 
-    <script>
-        const LAT = 6.4025;
-        const LON = 80.0033;
+    <script type="text/javascript">
+        function updateTime() {
+            var now = new Date();
+            var h = now.getHours();
+            var m = now.getMinutes();
+            var s = now.getSeconds();
+            var ampm = h >= 12 ? 'PM' : 'AM';
+            h = h % 12; h = h ? h : 12; 
+            m = m < 10 ? '0' + m : m;
+            s = s < 10 ? '0' + s : s;
+            
+            document.getElementById('clock').innerHTML = h + ":" + m + ":" + s + " " + ampm;
+            
+            var days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
+            var months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
+            document.getElementById('date').innerHTML = days[now.getDay()] + ", " + months[now.getMonth()] + " " + now.getDate();
+        }
 
-        async function fetchWeather() {
-            try {
-                // Cache bypass optimization
-                const url = `https://api.open-meteo.com/v1/forecast?latitude=${LAT}&longitude=${LON}&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&hourly=precipitation_probability&timezone=auto&_=${new Date().getTime()}`;
-                
-                const response = await fetch(url);
-                if (!response.ok) throw new Error();
-                const data = await response.json();
-                
-                if (data && data.current) {
-                    const cur = data.current;
-                    const hour = new Date().getHours();
-                    const rain = data.hourly ? data.hourly.precipitation_probability[hour] : 0;
+        function fetchWeather() {
+            var xhr = new XMLHttpRequest();
+            var url = "https://api.open-meteo.com/v1/forecast?latitude=6.4025&longitude=80.0033&current=temperature_2m,relative_humidity_2m,apparent_temperature,weather_code,wind_speed_10m&hourly=precipitation_probability&timezone=auto&nocache=" + new Date().getTime();
+            
+            xhr.onreadystatechange = function() {
+                if (xhr.readyState == 4 && xhr.status == 200) {
+                    var data = JSON.parse(xhr.responseText);
+                    var cur = data.current;
+                    var hour = new Date().getHours();
+                    var rain = data.hourly.precipitation_probability[hour];
 
-                    document.getElementById('realFeel').innerText = Math.round(cur.apparent_temperature) + "°C";
-                    document.getElementById('actualTemp').innerText = "Actual: " + Math.round(cur.temperature_2m) + "°C";
-                    document.getElementById('humidity').innerText = cur.relative_humidity_2m + "%";
-                    document.getElementById('wind').innerText = Math.round(cur.wind_speed_10m) + " km/h";
-                    document.getElementById('precip').innerText = (rain || 0) + "%";
+                    document.getElementById('realFeel').innerHTML = Math.round(cur.apparent_temperature) + "°C";
+                    document.getElementById('actualTemp').innerHTML = "Actual: " + Math.round(cur.temperature_2m) + "°C";
+                    document.getElementById('humidity').innerHTML = cur.relative_humidity_2m + "%";
+                    document.getElementById('wind').innerHTML = Math.round(cur.wind_speed_10m) + " km/h";
+                    document.getElementById('precip').innerHTML = (rain || 0) + "%";
+                    
+                    var code = cur.weather_code;
+                    var isDay = hour > 6 && hour < 18;
+                    var icon = isDay ? '☀️' : '🌙';
+                    var desc = 'Clear Skies';
 
-                    let icon = '☀️'; let desc = 'Clear Skies';
-                    const code = cur.weather_code;
-                    const isDay = hour > 6 && hour < 18;
-
+                    // සියලුම Icons සහ Descriptions මෙහි ඇතුළත් කර ඇත
                     if (code >= 1 && code <= 3) { icon = isDay ? '⛅' : '☁️'; desc = 'Partly Cloudy'; }
+                    else if (code >= 45 && code <= 48) { icon = '🌫️'; desc = 'Foggy'; }
                     else if (code >= 51 && code <= 67) { icon = '🌧️'; desc = 'Rainy'; }
                     else if (code >= 80 && code <= 82) { icon = '🌦️'; desc = 'Showers'; }
                     else if (code >= 95) { icon = '⛈️'; desc = 'Thunderstorm'; }
 
-                    document.getElementById('icon').innerText = icon;
-                    document.getElementById('description').innerText = desc;
+                    document.getElementById('icon').innerHTML = icon;
+                    document.getElementById('description').innerHTML = desc;
                 }
-            } catch (e) { 
-                console.log("Weather error, will retry...");
-                document.getElementById('description').innerText = "Updating Weather...";
-            }
-        }
-
-        function updateTime() {
-            const now = new Date();
-            document.getElementById('clock').innerText = now.toLocaleTimeString('en-US', { hour12: true, hour: '2-digit', minute: '2-digit', second: '2-digit' });
-            document.getElementById('date').innerText = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' }).toUpperCase();
+            };
+            xhr.open("GET", url, true);
+            xhr.send();
         }
 
         updateTime();
         fetchWeather();
         setInterval(updateTime, 1000);
-        setInterval(fetchWeather, 300000); 
+        setInterval(fetchWeather, 300000);
     </script>
 </body>
 </html>
