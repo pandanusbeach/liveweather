@@ -2,48 +2,65 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Pandanus Kiosk - Minimalist</title>
+    <title>Pandanus Live Weather Update</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
     <script src="https://rawcdn.githack.com/darkskyapp/skycons/master/skycons.js"></script>
     <style>
         body { background-color: #0c1c4e; color: white; margin: 0; font-family: 'Montserrat', sans-serif; text-align: center; overflow: hidden; }
-        .wrapper { width: 1080px; height: 1920px; display: block; margin: 0 auto; padding-top: 80px; }
-        .hotel-name { font-size: 42pt; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; line-height: 1.2; margin-bottom: 20px; }
-        .location { font-size: 20pt; opacity: 0.8; letter-spacing: 4px; }
-        .icon-container { margin-top: 30px; margin-bottom: 20px; height: 350px; }
-        #weather-icon { width: 350px; height: 350px; }
-        .temp-main { font-size: 140pt; font-weight: 900; line-height: 1; margin: 10px 0; }
-        .temp-actual { font-size: 30pt; font-weight: 700; margin-bottom: 20px; color: rgba(255,255,255,0.6); }
-        .desc { font-size: 48pt; font-weight: 800; color: #ffeb3b; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
-        .detail-bar { background: rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 40px; width: 95%; margin: 0 auto; font-size: 18pt; font-weight: 800; border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-around; }
-        .safety-card { background: rgba(255, 255, 255, 0.08); padding: 50px; border-radius: 60px; width: 85%; margin: 50px auto; text-align: left; border: 2px solid rgba(255, 255, 255, 0.15); min-height: 300px; }
-        .safety-title { font-size: 30pt; font-weight: 900; color: #ffeb3b; text-align: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; text-transform: uppercase; }
-        #clock { font-size: 70pt; font-weight: 900; margin-top: 40px; }
-        #date { font-size: 26pt; opacity: 0.8; font-weight: 700; }
+        .wrapper { width: 1080px; height: 1920px; display: block; margin: 0 auto; padding-top: 40px; }
+        .hotel-name { font-size: 40pt; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; margin-bottom: 5px; }
+        .location { font-size: 18pt; opacity: 0.8; letter-spacing: 4px; margin-bottom: 20px; }
+        
+        .icon-container { height: 280px; }
+        #weather-icon { width: 280px; height: 280px; }
+        
+        /* Temperature Section - Back to Original */
+        .temp-main { font-size: 130pt; font-weight: 900; line-height: 1; margin: 5px 0; }
+        .temp-actual { font-size: 30pt; font-weight: 700; margin-bottom: 15px; color: rgba(255,255,255,0.6); }
+        .desc { font-size: 40pt; font-weight: 800; color: #ffeb3b; margin-bottom: 20px; text-transform: uppercase; }
+
+        .forecast-container { display: flex; justify-content: space-around; width: 95%; margin: 20px auto; gap: 15px; }
+        .forecast-card { background: rgba(255, 255, 255, 0.08); padding: 20px 10px; border-radius: 30px; flex: 1; border: 1px solid rgba(255,255,255,0.1); }
+        .fc-day { font-size: 20pt; font-weight: 800; color: #ffeb3b; }
+        .fc-icon { width: 80px; height: 80px; margin: 5px auto; }
+        .fc-temp { font-size: 24pt; font-weight: 900; }
+
+        .detail-bar { background: rgba(255, 255, 255, 0.08); padding: 15px; border-radius: 20px; width: 90%; margin: 20px auto; font-size: 16pt; font-weight: 800; display: flex; justify-content: space-around; }
+        .safety-card { background: rgba(255, 255, 255, 0.05); padding: 30px; border-radius: 40px; width: 85%; margin: 20px auto; text-align: left; border: 1px solid rgba(255, 255, 255, 0.1); }
+        .safety-title { font-size: 24pt; font-weight: 900; color: #ffeb3b; text-align: center; margin-bottom: 10px; text-transform: uppercase; }
+        
+        #clock { font-size: 60pt; font-weight: 900; margin-top: 15px; }
+        #date { font-size: 22pt; opacity: 0.8; font-weight: 700; }
     </style>
 </head>
 <body>
     <div class="wrapper">
         <div class="hotel-name">PANDANUS BEACH<br>RESORT & SPA</div>
         <div class="location">Induruwa • Sri Lanka</div>
-        <div class="icon-container"><canvas id="weather-icon" width="350" height="350"></canvas></div>
-        <div style="font-size: 20pt; opacity: 0.7; margin-top: 10px; letter-spacing: 5px;">FEELS LIKE</div>
+        
+        <div class="icon-container"><canvas id="weather-icon" width="280" height="280"></canvas></div>
+        
+        <div style="font-size: 20pt; opacity: 0.7; letter-spacing: 5px; margin-top:10px;">FEELS LIKE</div>
         <div class="temp-main" id="realFeel">--°C</div>
         <div class="temp-actual" id="actualTemp">Actual: --°C</div>
         <div id="description" class="desc">Syncing...</div>
+
+        <div class="forecast-container">
+            <div class="forecast-card"><div class="fc-day" id="d1-name">---</div><canvas id="d1-icon" class="fc-icon" width="80" height="80"></canvas><div class="fc-temp" id="d1-temp">--°C</div></div>
+            <div class="forecast-card"><div class="fc-day" id="d2-name">---</div><canvas id="d2-icon" class="fc-icon" width="80" height="80"></canvas><div class="fc-temp" id="d2-temp">--°C</div></div>
+            <div class="forecast-card"><div class="fc-day" id="d3-name">---</div><canvas id="d3-icon" class="fc-icon" width="80" height="80"></canvas><div class="fc-temp" id="d3-temp">--°C</div></div>
+        </div>
+
         <div class="detail-bar">
             <div>Cloud: <span id="cloud" style="color:#ffeb3b">--%</span></div>
             <div>Rain: <span id="rain" style="color:#ffeb3b">--mm</span></div>
             <div>Hum: <span id="humidity" style="color:#ffeb3b">--%</span></div>
             <div>Wind: <span id="wind" style="color:#ffeb3b">--m/s</span></div>
         </div>
+
         <div class="safety-card">
             <div class="safety-title" id="safetyTitle">SAFETY PRECAUTIONS</div>
-            <div id="safetyContent" style="font-size: 20pt; line-height: 1.8; font-weight: 700;">
-                • Stay well hydrated - drink plenty of water<br>
-                • Use sunscreen and wear a hat<br>
-                • Enjoy your time at our beautiful beach
-            </div>
+            <div id="safetyContent" style="font-size: 18pt; line-height: 1.5; font-weight: 700;">Loading...</div>
         </div>
         <div id="clock">00:00:00</div>
         <div id="date">--</div>
@@ -51,69 +68,67 @@
 
     <script type="text/javascript">
         var API_KEY = "68268f97508a99272c4a4bc9436e0819";
-        var LAT = "6.37992"; 
-        var LON = "80.00990";
-        var skycons;
+        var LAT = "6.4230"; 
+        var LON = "79.9990";
+        var skycons = new Skycons({"color": "white"});
 
         function updateClock() {
             var d = new Date();
             var h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
             var ampm = h >= 12 ? 'PM' : 'AM';
-            var displayH = h % 12; displayH = displayH ? displayH : 12;
-            m = m < 10 ? '0'+m : m; s = s < 10 ? '0'+s : s;
-            document.getElementById('clock').innerHTML = displayH + ":" + m + ":" + s + " " + ampm;
+            h = h % 12 || 12; m = m < 10 ? '0'+m : m; s = s < 10 ? '0'+s : s;
+            document.getElementById('clock').innerHTML = h + ":" + m + ":" + s + " " + ampm;
             var days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
             var months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
             document.getElementById('date').innerHTML = days[d.getDay()] + ", " + months[d.getMonth()] + " " + d.getDate();
         }
 
-        function getW() {
-            var x = new XMLHttpRequest();
-            var u = "https://api.openweathermap.org/data/2.5/weather?lat=" + LAT + "&lon=" + LON + "&appid=" + API_KEY + "&units=metric&ts=" + new Date().getTime();
-            x.open("GET", u, true);
-            x.onreadystatechange = function() {
-                if (x.readyState == 4 && x.status == 200) {
-                    var j = JSON.parse(x.responseText);
-                    document.getElementById('realFeel').innerHTML = Math.round(j.main.feels_like) + "°C";
-                    document.getElementById('actualTemp').innerHTML = "Actual: " + Math.round(j.main.temp) + "°C";
-                    document.getElementById('humidity').innerHTML = j.main.humidity + "%";
-                    document.getElementById('cloud').innerHTML = j.clouds.all + "%";
-                    document.getElementById('wind').innerHTML = j.wind.speed + "m/s";
-                    document.getElementById('rain').innerHTML = (j.rain ? (j.rain['1h'] || 0) : 0) + "mm";
-                    document.getElementById('description').innerHTML = j.weather[0].main.toUpperCase();
+        function getAnim(id, icon) {
+            if (id >= 200 && id <= 699) return Skycons.RAIN;
+            if (id == 800) return icon.includes('n') ? Skycons.CLEAR_NIGHT : Skycons.CLEAR_DAY;
+            return icon.includes('n') ? Skycons.PARTLY_CLOUDY_NIGHT : Skycons.PARTLY_CLOUDY_DAY;
+        }
 
-                    var id = j.weather[0].id;
-                    var iconCode = j.weather[0].icon;
-                    var isNight = iconCode.indexOf('n') > -1;
-                    var anim = "PARTLY_CLOUDY_DAY";
-
-                    if (id >= 200 && id <= 699) anim = "RAIN"; 
-                    else if (id == 800) anim = isNight ? "CLEAR_NIGHT" : "CLEAR_DAY";
-                    else if (id >= 801 && id <= 804) anim = isNight ? "PARTLY_CLOUDY_NIGHT" : "PARTLY_CLOUDY_DAY";
-
-                    if (typeof Skycons !== 'undefined') {
-                        if(!skycons) skycons = new Skycons({"color": "white"});
-                        skycons.set("weather-icon", anim);
-                        skycons.play();
-                    }
-
-                    // --- Minimalist Logic ---
-                    if (id >= 200 && id <= 699) {
-                        document.getElementById('safetyTitle').innerHTML = "WEATHER ADVISORY";
-                        document.getElementById('safetyContent').innerHTML = "• Heavy rain detected nearby.<br>• Please stay indoors until the storm passes.<br>• Avoid all beach and pool areas.";
-                    } else {
-                        document.getElementById('safetyTitle').innerHTML = "SAFETY PRECAUTIONS";
+        function getWeatherData() {
+            fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`)
+            .then(res => res.json()).then(j => {
+                document.getElementById('realFeel').innerHTML = Math.round(j.main.feels_like) + "°C";
+                document.getElementById('actualTemp').innerHTML = "Actual: " + Math.round(j.main.temp) + "°C";
+                document.getElementById('humidity').innerHTML = j.main.humidity + "%";
+                document.getElementById('cloud').innerHTML = j.clouds.all + "%";
+                document.getElementById('wind').innerHTML = j.wind.speed + "m/s";
+                document.getElementById('rain').innerHTML = (j.rain ? (j.rain['1h'] || 0) : 0) + "mm";
+                document.getElementById('description').innerHTML = j.weather[0].main.toUpperCase();
+                skycons.set("weather-icon", getAnim(j.weather[0].id, j.weather[0].icon));
+                
+                if (j.weather[0].id < 700) {
+                    document.getElementById('safetyTitle').innerHTML = "WEATHER ADVISORY";
+                    document.getElementById('safetyContent').innerHTML = "• Heavy rain detected nearby.<br>• Please stay indoors until the storm passes.";
+                } else {
+                     document.getElementById('safetyTitle').innerHTML = "SAFETY PRECAUTIONS";
                         document.getElementById('safetyContent').innerHTML = "• Avoid direct sunlight (11:00 AM – 3:00 PM)<br>• Stay well hydrated - drink plenty of water<br>• Wear light, cotton clothing<br>• Use sunscreen, sunglasses, an umbrella, or a hat<br>• Take breaks in shaded or AC areas";
-                    }
                 }
-            };
-            x.send();
+                skycons.play();
+            });
+
+            fetch(`https://api.openweathermap.org/data/2.5/forecast?lat=${LAT}&lon=${LON}&appid=${API_KEY}&units=metric`)
+            .then(res => res.json()).then(data => {
+                const days = ['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'];
+                [8, 16, 24].forEach((idx, i) => {
+                    let d = data.list[idx];
+                    let date = new Date(d.dt * 1000);
+                    document.getElementById(`d${i+1}-name`).innerHTML = days[date.getDay()];
+                    document.getElementById(`d${i+1}-temp`).innerHTML = Math.round(d.main.temp) + "°C";
+                    skycons.set(`d${i+1}-icon`, getAnim(d.weather[0].id, d.weather[0].icon));
+                });
+                skycons.play();
+            });
         }
 
         setInterval(updateClock, 1000);
-        setInterval(getW, 300000);
+        setInterval(getWeatherData, 600000);
         updateClock();
-        getW();
+        getWeatherData();
     </script>
 </body>
 </html>
