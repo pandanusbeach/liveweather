@@ -25,7 +25,7 @@
 <body>
     <div class="wrapper">
         <div class="hotel-name">PANDANUS BEACH<br>RESORT & SPA</div>
-        <div class="location">Bentota • Sri Lanka</div>
+        <div class="location">Induruwa • Sri Lanka</div>
         <div class="icon-container"><canvas id="weather-icon" width="350" height="350"></canvas></div>
         <div style="font-size: 20pt; opacity: 0.7; margin-top: 10px; letter-spacing: 5px;">FEELS LIKE</div>
         <div class="temp-main" id="realFeel">--°C</div>
@@ -51,8 +51,8 @@
 
     <script type="text/javascript">
         var API_KEY = "68268f97508a99272c4a4bc9436e0819";
-        var LAT = "6.4230"; 
-        var LON = "79.9990";
+        var LAT = "6.37992"; 
+        var LON = "80.00990";
         var skycons;
 
         function updateClock() {
@@ -103,7 +103,7 @@
                         document.getElementById('safetyContent').innerHTML = "• Heavy rain detected nearby.<br>• Please stay indoors until the storm passes.<br>• Avoid all beach and pool areas.";
                     } else {
                         document.getElementById('safetyTitle').innerHTML = "SAFETY PRECAUTIONS";
-                        document.getElementById('safetyContent').innerHTML = "• Stay well hydrated - drink plenty of water.<br>• Use sunscreen and wear a hat.<br>• Enjoy your time at our beautiful beach.";
+                        document.getElementById('safetyContent').innerHTML = "• Avoid dirict sunlight (11.00 AM - 3:00 PM.<br>• Stay well hydrated - drink plenty of water.<br>• Wear light, cotton clothing.<br>• Use sunscreen, sunglass, an umbrella, or hat.<br>• Take break in shade or AC areas.";
                     }
                 }
             };
