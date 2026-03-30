@@ -2,21 +2,22 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Pandanus Kiosk - Bentota Weather</title>
+    <title>Pandanus Kiosk - Minimalist</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&display=swap" rel="stylesheet">
+    <script src="https://rawcdn.githack.com/darkskyapp/skycons/master/skycons.js"></script>
     <style>
         body { background-color: #0c1c4e; color: white; margin: 0; font-family: 'Montserrat', sans-serif; text-align: center; overflow: hidden; }
         .wrapper { width: 1080px; height: 1920px; display: block; margin: 0 auto; padding-top: 80px; }
         .hotel-name { font-size: 42pt; font-weight: 900; letter-spacing: 10px; text-transform: uppercase; line-height: 1.2; margin-bottom: 20px; }
         .location { font-size: 20pt; opacity: 0.8; letter-spacing: 4px; }
-        .icon-container { font-size: 150pt; margin-top: 30px; display: inline-block; animation: moveUpDown 4s ease-in-out infinite; }
-        @keyframes moveUpDown { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(-30px); } }
+        .icon-container { margin-top: 30px; margin-bottom: 20px; height: 350px; }
+        #weather-icon { width: 350px; height: 350px; }
         .temp-main { font-size: 140pt; font-weight: 900; line-height: 1; margin: 10px 0; }
         .temp-actual { font-size: 30pt; font-weight: 700; margin-bottom: 20px; color: rgba(255,255,255,0.6); }
         .desc { font-size: 48pt; font-weight: 800; color: #ffeb3b; margin-bottom: 30px; text-transform: uppercase; letter-spacing: 2px; }
         .detail-bar { background: rgba(255, 255, 255, 0.1); padding: 25px; border-radius: 40px; width: 95%; margin: 0 auto; font-size: 18pt; font-weight: 800; border: 1px solid rgba(255,255,255,0.1); display: flex; justify-content: space-around; }
-        .safety-card { background: rgba(255, 255, 255, 0.08); padding: 50px; border-radius: 60px; width: 85%; margin: 50px auto; text-align: left; border: 2px solid rgba(255, 255, 255, 0.15); }
-        .safety-title { font-size: 30pt; font-weight: 900; color: #ffeb3b; text-align: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; }
+        .safety-card { background: rgba(255, 255, 255, 0.08); padding: 50px; border-radius: 60px; width: 85%; margin: 50px auto; text-align: left; border: 2px solid rgba(255, 255, 255, 0.15); min-height: 300px; }
+        .safety-title { font-size: 30pt; font-weight: 900; color: #ffeb3b; text-align: center; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.2); padding-bottom: 10px; text-transform: uppercase; }
         #clock { font-size: 70pt; font-weight: 900; margin-top: 40px; }
         #date { font-size: 26pt; opacity: 0.8; font-weight: 700; }
     </style>
@@ -25,28 +26,23 @@
     <div class="wrapper">
         <div class="hotel-name">PANDANUS BEACH<br>RESORT & SPA</div>
         <div class="location">Induruwa • Sri Lanka</div>
-        
-        <div class="icon-container" id="icon">🌙</div>
+        <div class="icon-container"><canvas id="weather-icon" width="350" height="350"></canvas></div>
         <div style="font-size: 20pt; opacity: 0.7; margin-top: 10px; letter-spacing: 5px;">FEELS LIKE</div>
         <div class="temp-main" id="realFeel">--°C</div>
         <div class="temp-actual" id="actualTemp">Actual: --°C</div>
         <div id="description" class="desc">Syncing...</div>
-        
         <div class="detail-bar">
             <div>Cloud: <span id="cloud" style="color:#ffeb3b">--%</span></div>
             <div>Rain: <span id="rain" style="color:#ffeb3b">--mm</span></div>
             <div>Hum: <span id="humidity" style="color:#ffeb3b">--%</span></div>
             <div>Wind: <span id="wind" style="color:#ffeb3b">--m/s</span></div>
         </div>
-
         <div class="safety-card">
             <div class="safety-title" id="safetyTitle">SAFETY PRECAUTIONS</div>
             <div id="safetyContent" style="font-size: 20pt; line-height: 1.8; font-weight: 700;">
-                • Avoid direct sunlight (11:00 AM – 3:00 PM)<br>
                 • Stay well hydrated - drink plenty of water<br>
-                • Wear light, breathable clothing<br>
-                • Use sunscreen, sunglasses, and a hat<br>
-                • Take breaks in shaded or AC areas
+                • Use sunscreen and wear a hat<br>
+                • Enjoy your time at our beautiful beach
             </div>
         </div>
         <div id="clock">00:00:00</div>
@@ -55,17 +51,17 @@
 
     <script type="text/javascript">
         var API_KEY = "68268f97508a99272c4a4bc9436e0819";
-        // Bentota Coordinates
         var LAT = "6.37992"; 
         var LON = "80.00990";
+        var skycons;
 
         function updateClock() {
             var d = new Date();
             var h = d.getHours(), m = d.getMinutes(), s = d.getSeconds();
             var ampm = h >= 12 ? 'PM' : 'AM';
-            h = h % 12; h = h ? h : 12;
+            var displayH = h % 12; displayH = displayH ? displayH : 12;
             m = m < 10 ? '0'+m : m; s = s < 10 ? '0'+s : s;
-            document.getElementById('clock').innerHTML = h + ":" + m + ":" + s + " " + ampm;
+            document.getElementById('clock').innerHTML = displayH + ":" + m + ":" + s + " " + ampm;
             var days = ['SUNDAY', 'MONDAY', 'TUESDAY', 'WEDNESDAY', 'THURSDAY', 'FRIDAY', 'SATURDAY'];
             var months = ['JANUARY', 'FEBRUARY', 'MARCH', 'APRIL', 'MAY', 'JUNE', 'JULY', 'AUGUST', 'SEPTEMBER', 'OCTOBER', 'NOVEMBER', 'DECEMBER'];
             document.getElementById('date').innerHTML = days[d.getDay()] + ", " + months[d.getMonth()] + " " + d.getDate();
@@ -83,27 +79,28 @@
                     document.getElementById('humidity').innerHTML = j.main.humidity + "%";
                     document.getElementById('cloud').innerHTML = j.clouds.all + "%";
                     document.getElementById('wind').innerHTML = j.wind.speed + "m/s";
-                    
-                    var rainVal = j.rain ? (j.rain['1h'] || 0) : 0;
-                    document.getElementById('rain').innerHTML = rainVal + "mm";
+                    document.getElementById('rain').innerHTML = (j.rain ? (j.rain['1h'] || 0) : 0) + "mm";
+                    document.getElementById('description').innerHTML = j.weather[0].main.toUpperCase();
 
                     var id = j.weather[0].id;
                     var iconCode = j.weather[0].icon;
                     var isNight = iconCode.indexOf('n') > -1;
-                    var emoji = "☀️"; var txt = "CLEAR";
+                    var anim = "PARTLY_CLOUDY_DAY";
 
-                    if (id >= 200 && id <= 232) { emoji = "⛈️"; txt = "THUNDERSTORM"; }
-                    else if (id >= 500 && id <= 531) { emoji = "🌧️"; txt = "HEAVY RAIN"; }
-                    else if (id >= 300 && id <= 321) { emoji = "🌦️"; txt = "DRIZZLE"; }
-                    else if (id >= 801 && id <= 804) { emoji = isNight ? "☁️" : "⛅"; txt = "CLOUDY"; }
-                    else { emoji = isNight ? "🌙" : "☀️"; txt = "CLEAR SKY"; }
+                    if (id >= 200 && id <= 699) anim = "RAIN"; 
+                    else if (id == 800) anim = isNight ? "CLEAR_NIGHT" : "CLEAR_DAY";
+                    else if (id >= 801 && id <= 804) anim = isNight ? "PARTLY_CLOUDY_NIGHT" : "PARTLY_CLOUDY_DAY";
 
-                    document.getElementById('icon').innerHTML = emoji;
-                    document.getElementById('description').innerHTML = txt;
+                    if (typeof Skycons !== 'undefined') {
+                        if(!skycons) skycons = new Skycons({"color": "white"});
+                        skycons.set("weather-icon", anim);
+                        skycons.play();
+                    }
 
-                    if (id < 700) { 
+                    // --- Minimalist Logic ---
+                    if (id >= 200 && id <= 699) {
                         document.getElementById('safetyTitle').innerHTML = "WEATHER ADVISORY";
-                        document.getElementById('safetyContent').innerHTML = "• Heavy rain detected nearby<br>• Avoid outdoor activities & pool areas<br>• Watch out for slippery floor surfaces<br>• Keep electronic devices safe<br>• Stay indoors until the storm passes";
+                        document.getElementById('safetyContent').innerHTML = "• Heavy rain detected nearby.<br>• Please stay indoors until the storm passes.<br>• Avoid all beach and pool areas.";
                     } else {
                         document.getElementById('safetyTitle').innerHTML = "SAFETY PRECAUTIONS";
                         document.getElementById('safetyContent').innerHTML = "• Avoid direct sunlight (11:00 AM – 3:00 PM)<br>• Stay well hydrated - drink plenty of water<br>• Wear light, breathable clothing<br>• Use sunscreen, sunglasses, and a hat<br>• Take breaks in shaded or AC areas";
@@ -114,7 +111,7 @@
         }
 
         setInterval(updateClock, 1000);
-        setInterval(getW, 300000); // විනාඩි 5කට සැරයක් කාලගුණය Update වේ
+        setInterval(getW, 300000);
         updateClock();
         getW();
     </script>
